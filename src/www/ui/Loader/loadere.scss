@@ -1,0 +1,67 @@
+*,
+*::before,
+*::after {
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+   font-family: montserrat, 'Microsoft Sans Serif', gotham;
+}
+
+a {
+   text-decoration: none;
+}
+
+.loader-cona {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 100;
+   height: 100%;
+   margin-top: auto;
+}
+
+.loader {
+   display: flex;
+   justify-content: space-around;
+   width: 60px;
+   padding: 10px 0;
+   position: absolute;
+   top: 40%;
+   z-index: 101;
+
+   span {
+      display: block;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: rgb(160, 97, 255);
+   }
+   .item-1 {
+      animation: circles 1.5s infinite linear;
+   }
+   .item-2 {
+      animation: circles 1.5s infinite linear;
+      animation-delay: .5s;
+   }
+   .item-3 {
+      animation: circles 1.5s infinite linear;
+      animation-delay: 1s;
+   }
+}
+
+@keyframes circles {
+   0% {
+      transform: translateY(0);
+   }
+   20% {
+      background-color: rgb(132, 9, 255);
+      transform: translateY(-5px);
+   }
+   40% {
+      transform: translateY(0px);
+
+   }
+   100% {
+      transform: translateY(0px);
+   }
+}

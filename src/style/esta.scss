@@ -1,0 +1,368 @@
+
+
+@import "initial.scss";
+
+.all-sign {
+   display: flex;
+   justify-content: center;
+   form {
+      @include gray-border-back;
+      width: 90%;
+      max-width: 700px;
+      padding: 50px 50px 40px;
+      margin-top: 20px;
+      background-color: white;
+   }
+   .acform__title {
+      transform: translateY(-15px);
+   }
+}
+
+.footer__signout {
+   cursor: pointer;
+   &:hover {
+      text-decoration: underline;
+   }
+}
+
+// // //   CATEGORIES   // // //
+.categories {
+   margin-top: 20px;
+   display: flex;
+   flex-direction: column-reverse;
+   .categories__link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px;
+      box-shadow: inset 0 0 25px darken($m-purple, 5%);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      h5 {
+         margin-bottom: 0;
+      }
+      i {
+         font-size: 1.3rem;
+      }
+   }
+}
+
+.x-close {
+   position: absolute;
+   top: -1px;
+   right: -1px;
+   padding: 6px 30px;
+   background-color: orange;
+   border-radius: 0 10px 0 10px;
+   color: white;
+   cursor: pointer;
+}
+
+.modal-btns {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.acform__loading, .signin-loading {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   div {
+      position: relative;
+      .loader {
+         width: 45px;
+      }
+      .loader-item {
+         width: 11px;
+         height: 11px;
+         background-color: orange;
+      }
+   }
+   button {
+      margin-left: 20px;
+   }
+}
+
+.bta {
+   border: none;
+   outline: none;
+   font-size: 1.1rem;
+   padding: 5.5px 15px;
+   border-radius: 5px;
+   background-color: darken($m-purple, 2%);
+   color: white;
+   &:hover {
+      color: white;
+      background-color: darken($m-purple, 7%);
+   }
+}
+
+// // //   GOODS   // // //
+.goods__list {
+   margin-top: 15px;
+   display: flex;
+   flex-direction: column-reverse;
+}
+
+.goods__item {
+   padding: 4px 10px;
+   box-shadow: inset 0 0 5px $m-purple;
+   border-radius: 5px;
+   margin-bottom: 5px;
+   transition: all .3s;
+   .goods__item__main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      .options {
+         position: static;
+      }
+      .goods__item__name {
+         flex-grow: 1;
+         font-size: 14px;
+         font-family: "Avenir-Next";
+         letter-spacing: .8px;
+         padding-right: 10px;
+         overflow: hidden;
+      }
+      .goods__item__price {
+         font-size: 14px;
+         font-family: "Avenir-Next";
+         letter-spacing: .8px;
+         padding-right: 5px;
+         box-shadow: inset 0 0 5px $m-purple;
+         padding: 2px 5px;
+         border-radius: 5px;
+         font-weight: 500;
+      }
+      .goods__item__options {
+         font-size: 1.1rem;
+         padding: 2px 2px 2px 8px;
+         transition: all .3s ease;
+      }
+   }
+}
+.goods__options {
+   width: 280px;
+   position: absolute;
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   top: 30px;
+   right: -5px;
+   padding: 10px;
+   background-color: rgba(0, 0, 0, .5);
+   backdrop-filter: blur(2px);
+   border-radius: 8px;
+   z-index: 9999;
+   .goods__options__main {
+      display: flex;
+      gap: 5px;
+   }
+   .goods__options__edit {
+      display: flex;
+      flex-direction: column;
+      padding: 5px;
+      background-color: $gray40;
+      border-radius: 5px;
+      gap: 5px;
+      textarea {
+         max-height: 90px;
+      }
+   }
+   h6 {
+      width: 100%;
+      padding: 5px 8px;
+      margin-bottom: 0;
+      background-color: $gray40;
+      border-radius: 5px;
+      color: black;
+      text-align: center;
+      transition: all .2s ease;
+      cursor: pointer;
+      &:hover {
+         color: black;
+         background-color: white;
+      }
+   }
+}
+
+
+
+// // //   DEBT   // // //
+
+.debtors-list {
+   display: grid;
+   grid-template-columns: repeat((2, minmax(0, 1fr)));
+   gap: 5px;
+   margin-top: 15px;
+   transition: all .5s ease;
+}
+.debtor {
+   position: relative;
+   height: 140px;
+   cursor: pointer;
+   background-color: lighten($m-purple, 20%);
+   border: 1px solid $gray25;
+   border-radius: 10px;
+   padding: 8px 3px;
+   hr {
+      margin-top: 0;
+      margin-bottom: 5px;
+   }
+   .debtor-debt {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 3px;
+      margin-top: 10px;
+      .userdebt-item {
+         width: 100%;
+         background-color: $gray40;
+         padding: 0px 3px;
+         border-radius: 5px;
+         text-align: center;
+         color: rgb(70, 70, 70);
+         // font-weight: 500;
+         position: relative;
+         font-size: 14px;
+         font-family: prompt;
+      }
+      .userdebt-item i {
+         position: absolute;
+         left: 0;
+         background-color: $gray25;
+         border-radius: 5px 0 0 5px;
+         padding: 0 2px;
+      }
+      p.text-center {
+         width: 100%;
+         position: absolute;
+         right: 50%;
+         transform: translateX(50%);
+      }
+   }
+   button.bt1 {
+      position: absolute;
+      bottom: 10px;
+      margin-top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+   }
+}
+
+.debtor__options {
+   width: 30px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   position: absolute;
+   left: 10px;
+   top: 10px;
+   gap: 3.5px;
+   span {
+      width: 80%;
+      height: 3px;
+      background-color: black;
+      border-radius: 10px;
+      opacity: .8;
+   }
+}
+
+.debtor__options_list {
+   width: 150px;
+   display: flex;
+   flex-direction: column;
+   position: absolute;
+   top: 25px;
+   left: 0px;
+   padding: 10px;
+   background-color: rgba(0, 0, 0, .5);
+   backdrop-filter: blur(2px);
+   border-radius: 8px;
+   gap: 3px;
+   z-index: 9999;
+   h6 {
+      width: 100%;
+      padding: 5px 8px;
+      margin-bottom: 0;
+      background-color: $gray40;
+      border-radius: 5px;
+      color: black;
+      transition: all .2s ease;
+      cursor: pointer;
+      &:hover {
+         color: black;
+         background-color: white;
+      }
+      &:nth-child(2) {
+         text-align: center;
+         color: white;
+         background-color: red;
+         &:hover {
+            background-color: darken(red, 5%);
+         }
+      }
+   }
+}
+
+.expand-debt {
+   background-color: lighten($m-purple, 20%);
+   padding: 8px;
+   width: 350px;
+   height: 600px;
+   position: fixed;
+   top: 2%;
+   left: 50%;
+   transform: translateX(-50%);
+   margin: 0 auto;
+   box-shadow: 0 0 10px 2px $gray25;
+   z-index: 10;
+   .debtor__name {
+      font-size: 22px;
+      font-weight: 600;
+   }
+   .debtor-debt {
+      max-height: 77%;
+      margin-top: 20px;
+      overflow: auto;
+      .userdebt-item {
+         font-size: 16px;
+         margin-bottom: 8px;
+      }
+   }
+   .newdebtform {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translate(-50%);
+   }
+   .newdebtform-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      input {
+         border: 1px solid gray;
+         padding: 5px 8px;
+         border-radius: 5px;
+         margin-right: 5px;
+         min-width: 230px;
+         &:focus {
+            outline: none;
+            border: transparent 1px solid;
+            box-shadow: 0 0 5px 2px #c0d5ff;
+         }
+      }
+   }
+   .debtor__total-price {
+      position: absolute;
+      bottom: 40px;
+   }
+}
+.nothing {
+   text-align: center;
+   padding-top: 50px;
+}
