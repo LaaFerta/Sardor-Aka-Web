@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDebtors } from '../../redux/debtActions';
 import { numberWithCommas, toastSuccess } from '../../www/element/utils';
@@ -74,10 +74,14 @@ function Debtor({ debtor }) {
       setOptions(!options)
       setRemoveConfirm(false)
    }
+   function controlExpand() {
+      setOptions(false)
+      setExpand(false)
+   }
 
    return (
       <div className={expand ? 'debtor expand-debt' : 'debtor'}>
-         {expand && <i onClick={() => setExpand(false)} className='bi bi-x-lg x-close'></i>}
+         {expand && <i onClick={controlExpand} className='bi bi-x-lg x-close'></i>}
          {expand && <div onClick={() => controlOptions()} className='debtor__options'>
             <span></span><span></span><span></span>
             {options && <div onClick={ee => ee.stopPropagation()} className="debtor__options_list noget">

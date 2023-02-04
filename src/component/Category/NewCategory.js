@@ -3,9 +3,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategories } from '../../redux/debtActions';
+import Loadere from '../../www/ui/Loader/Loadere';
 
 function NewCategory({ modalCategory, setModalCategory }) {
    const [catName, setCatName] = useState('')
+   const [loading, setLoading] = useState(false)
    const token = localStorage.getItem('token188')
    const inputRef = useRef()
    const dispatch = useDispatch()
@@ -18,7 +20,9 @@ function NewCategory({ modalCategory, setModalCategory }) {
 
    function addCategory(ee) {
       ee.preventDefault()
-      if(catName.length < 3 && catName > 50) return
+      if (catName.length < 3 && catName > 50) return
+      setLoading(true)
+
       fetch('https://axror.onrender.com/category/add', {
          method: 'POST',
          headers: {
@@ -27,14 +31,18 @@ function NewCategory({ modalCategory, setModalCategory }) {
             "Content-Type": 'application/json',
             "auth-token": token
          },
-         body: JSON.stringify({catName})
+         body: JSON.stringify({ catName })
       }).then(result => result.json()).then(data => {
 
-         
+         setLoading(false)
          dispatch(setCategories([...categories, data.data]))
          setCatName('')
          setModalCategory(false)
-      }).catch(ex => console.log(ex))
+
+      }).catch(ex => {
+         console.log(ex)
+         setLoading(false)
+      })
    }
 
    return (
@@ -50,7 +58,10 @@ function NewCategory({ modalCategory, setModalCategory }) {
                </div>
                <div className='modal-btns'>
                   <button type='button' className='btn btn-danger' onClick={() => setModalCategory(!modalCategory)}>yopish</button>
-                  <button type='submit' className="bta">qo'shish</button>
+                  <div className='acform__loading'>
+                     {loading && <div> <Loadere /> </div>}
+                     <button type='submit' className="bta">qo'shish</button>
+                  </div>
                </div>
             </form>
 

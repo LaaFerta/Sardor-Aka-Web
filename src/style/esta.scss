@@ -40,6 +40,7 @@
       margin-bottom: 10px;
       h5 {
          margin-bottom: 0;
+         font-weight: 400;
       }
       i {
          font-size: 1.3rem;
@@ -122,14 +123,12 @@
       .goods__item__name {
          flex-grow: 1;
          font-size: 14px;
-         font-family: "Avenir-Next";
          letter-spacing: .8px;
          padding-right: 10px;
          overflow: hidden;
       }
       .goods__item__price {
          font-size: 14px;
-         font-family: "Avenir-Next";
          letter-spacing: .8px;
          padding-right: 5px;
          box-shadow: inset 0 0 5px $m-purple;
@@ -322,7 +321,7 @@
    z-index: 10;
    .debtor__name {
       font-size: 22px;
-      font-weight: 600;
+      font-weight: 500;
    }
    .debtor-debt {
       max-height: 77%;
@@ -352,8 +351,8 @@
          min-width: 230px;
          &:focus {
             outline: none;
-            border: transparent 1px solid;
-            box-shadow: 0 0 5px 2px #c0d5ff;
+            // border: 1px solid ;
+            box-shadow: 0 0 5px 2px #c7c7c7;
          }
       }
    }

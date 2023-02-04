@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toastError, toastSuccess } from '../../www/element/utils';
 import '../../style/modal.scss'
 import { setDebtors } from '../../redux/debtActions';
+import Loadere from '../../www/ui/Loader/Loadere';
 
 function NewDebtor({ showNewDebt, setShowNewDebt }) {
    const [debtor, setDebtor] = useState('')
    const [amount, setAmount] = useState('')
+   const [loading, setLoading]= useState(false)
    const token = localStorage.getItem('token188')
    const inputRef = useRef()
    const dispatch = useDispatch()
@@ -20,6 +22,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
 
    function addNewDebt(ee) {
       ee.preventDefault()
+      setLoading(true)
 
       setTimeout(() => {
          fetch('https://axror.onrender.com/debt/add', {
@@ -44,16 +47,20 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
                },
                body: JSON.stringify({ amount, addedAt: Date.now() })
             }).then(result => result.json()).then(data => {
-               if(data.error) return toastError(data.error)
-               
+               if (data.error) return toastError(data.error)
+
                dispatch(setDebtors([...debtors, data.data]))
 
+               setLoading(false)
                toastSuccess(data.success)
                setShowNewDebt(false)
                setDebtor('')
                setAmount('')
             })
-         }).catch(ex => console.log(ex))
+         }).catch(ex => {
+            setLoading(false)
+            console.log(ex)
+         })
       }, 500);
    }
 
@@ -77,7 +84,11 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
                </div>
                <div className='modal-btns'>
                   <button type='button' className='btn btn-danger' onClick={() => setShowNewDebt(!showNewDebt)}>yopish</button>
-                  <button type='submit' className="bta">qo'shish</button>
+                  <div className='signin-loading'>
+                     {loading && <div> <Loadere /> </div>}
+                     <button type='submit' className="bta">qo'shish</button>
+
+                  </div>
                </div>
             </form>
 
