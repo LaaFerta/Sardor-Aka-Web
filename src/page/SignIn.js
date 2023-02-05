@@ -1,5 +1,6 @@
 
 
+import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -16,41 +17,38 @@ function SignIn(props) {
    const dispatch = useDispatch()
 
 
-   function signinControl(ee) {
+   async function signinControl(ee) {
       ee.preventDefault()
       setLoading(true)
-      setTimeout(() => {
 
-         fetch('https://axror.onrender.com/auth/signin', {
-            method: "POST",
-            headers: {
-               "Content-Type": "application/json",
-               'Access-Control-Allow-Origin': '*',
-               'Access-Control-Allow-Methods': 'POST'
-            },
-            body: JSON.stringify({ username, password })
-         }).then(result => result.json()).then(data => {
-            if (data.error) return toastError(data.error)
+      fetch("/auth/signin" ,{
+         method: "post",
+         headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'post',
+            "Content-Type": "application/json",
+         },
+         body: JSON.stringify({username, password})
+      }).then(result => result.json()).then(data => {
+         if (data.error) return toastError(data.error)
 
-            setLoading(false)
-            dispatch(setSignedIn(data.user))
+         setLoading(false)
+         dispatch(setSignedIn(data.user))
 
-            navigate('/')
-            toastSuccess(data.success)
-            localStorage.setItem('token188', data.token)
-            localStorage.setItem('user188', JSON.stringify(data.user))
+         navigate('/')
+         toastSuccess(data.success)
+         localStorage.setItem('token188', data.token)
+         localStorage.setItem('user188', JSON.stringify(data.user))
 
-            setUsername('')
-            setPassword('')
+         setUsername('')
+         setPassword('')
 
-         }).catch(ex => {
-            setLoading(false)
-            toastError("Serverda xatolik yuz berdi")
-            console.log(ex);
-         })
-      }, 700)
+      }).catch(ex => {
+         setLoading(false)
+         console.log(ex)
+         toastError("Serverda xatolik yuz berdi")
+      })
    }
-
 
 
    return (

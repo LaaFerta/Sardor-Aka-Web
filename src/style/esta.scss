@@ -126,6 +126,7 @@
          letter-spacing: .8px;
          padding-right: 10px;
          overflow: hidden;
+         font-weight: 500;
       }
       .goods__item__price {
          font-size: 14px;
@@ -144,7 +145,7 @@
    }
 }
 .goods__options {
-   width: 280px;
+   width: 300px;
    position: absolute;
    display: flex;
    flex-direction: column;
@@ -158,6 +159,7 @@
    z-index: 9999;
    .goods__options__main {
       display: flex;
+      align-items: center;
       gap: 5px;
    }
    .goods__options__edit {
@@ -172,6 +174,7 @@
       }
    }
    h6 {
+      flex-grow: 2;
       width: 100%;
       padding: 5px 8px;
       margin-bottom: 0;
@@ -185,6 +188,9 @@
          color: black;
          background-color: white;
       }
+   }
+   h6:nth-child(3) {
+      width: 35px;
    }
 }
 
@@ -200,13 +206,16 @@
    transition: all .5s ease;
 }
 .debtor {
-   position: relative;
-   height: 140px;
-   cursor: pointer;
-   background-color: lighten($m-purple, 20%);
-   border: 1px solid $gray25;
-   border-radius: 10px;
-   padding: 8px 3px;
+   transition: all .4s ease;
+   & > div {
+      position: relative;
+      height: 140px;
+      cursor: pointer;
+      background-color: lighten($m-purple, 20%);
+      border: 1px solid $gray25;
+      border-radius: 10px;
+      padding: 8px 3px;
+   }
    hr {
       margin-top: 0;
       margin-bottom: 5px;
@@ -308,20 +317,30 @@
 }
 
 .expand-debt {
-   background-color: lighten($m-purple, 20%);
-   padding: 8px;
-   width: 350px;
-   height: 600px;
    position: fixed;
-   top: 2%;
-   left: 50%;
-   transform: translateX(-50%);
-   margin: 0 auto;
-   box-shadow: 0 0 10px 2px $gray25;
-   z-index: 10;
-   .debtor__name {
-      font-size: 22px;
-      font-weight: 500;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   top: 0;
+   background-color: rgba(0, 0, 0, .55);
+   z-index: 1000;
+   display: flex;
+   justify-content: center;
+   & > div {
+      background-color: lighten($m-purple, 20%);
+      padding: 8px;
+      width: 350px;
+      height: 600px;
+      position: fixed;
+      top: 30px;
+      // left: 50%;
+      // transform: translateX(-50%);
+      margin: 0 auto;
+      z-index: 10;
+      .debtor__name {
+         font-size: 22px;
+         font-weight: 500;
+      }
    }
    .debtor-debt {
       max-height: 77%;
@@ -364,4 +383,11 @@
 .nothing {
    text-align: center;
    padding-top: 50px;
+}
+
+
+
+// // // // //   MEDIA QUERIES   // // // // // //
+@media (min-width: 600px) {
+   
 }

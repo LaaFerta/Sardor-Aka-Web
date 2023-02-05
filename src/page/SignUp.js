@@ -11,7 +11,7 @@ function SignUp(props) {
 
    function signup(ee) {
       ee.preventDefault()
-      fetch('https://axror.onrender.com/auth/signup', {
+      fetch('/auth/signup', {
          method: "post",
          headers: {"Content-Type": "application/json"},
          body: JSON.stringify({username, password})

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveLink, setGoods } from '../redux/debtActions';
+import { setActiveLink, setCategories, setGoods } from '../redux/debtActions';
 import { numberWithCommas, toastSuccess } from '../www/element/utils';
 import Loadere from '../www/ui/Loader/Loadere';
 
@@ -13,19 +13,26 @@ function Goods(props) {
    const [options, setOptions] = useState(false)
    const [goodsId, setGoodsId] = useState('')
 
-   const [editGoods, setEditGoods] = useState(false)
+   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
+   const [showEditGoods, setShowEditGoods] = useState(false)
+   const [showPurchased, setShowPurchased] = useState(false)
+
    const [goodsName, setGoodsName] = useState('')
    const [goodsPrice, setGoodsPrice] = useState('')
+   const [goodsPurchased, setGoodsPurchased] = useState('')
+   const [goodsCategory, setGoodsCategory] = useState('')
+
 
    const token = localStorage.getItem('token188')
    const goods = useSelector(state => state.goods)
+   const categories = useSelector(state => state.categories)
    const dispatch = useDispatch()
    const [nothing, setNothing] = useState(false)
 
 
    useEffect(() => {
       dispatch(setActiveLink("Goods"))
-      fetch('https://axror.onrender.com/goods/all', {
+      fetch('/goods/all', {
          method: 'GET',
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -38,11 +45,29 @@ function Goods(props) {
 
          dispatch(setGoods(data.data))
       }).catch(ex => console.log(ex))
+
+      fetch('/category/all', {
+         method: "GET",
+         headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET',
+            "Content-Type": 'application/json',
+            "auth-token": token
+         }
+      }).then(result => result.json()).then(data => {
+
+         dispatch(setCategories(data.data))
+         if (!data.data.length) setNothing(true)
+
+      }).catch(ex => {
+         console.log(ex);
+      })
+
       // eslint-disable-next-line
    }, [])
 
    function removeGoods(goodsId) {
-      fetch(`https://axror.onrender.com/goods/remove/${goodsId}`, {
+      fetch(`/goods/remove/${goodsId}`, {
          method: "DELETE",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -60,7 +85,7 @@ function Goods(props) {
    }
 
    function editGoodsInfo(goodsId) {
-      fetch(`https://axror.onrender.com/goods/edit/${goodsId}`, {
+      fetch(`/goods/edit/${goodsId}`, {
          method: "PUT",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -68,7 +93,7 @@ function Goods(props) {
             "Content-Type": "application/json",
             "auth-token": token
          },
-         body: JSON.stringify({ name: goodsName, price: +goodsPrice, updatedAt: Date.now() })
+         body: JSON.stringify({ name: goodsName, price: +goodsPrice, purchased: +goodsPurchased, category: goodsCategory, updatedAt: Date.now() })
       }).then(result => result.json()).then(data => {
 
          const newArray = goods.map(item => {
@@ -83,14 +108,20 @@ function Goods(props) {
    }
 
    function controlEditGoods(item) {
+      setShowConfirmDelete(false)
+      setShowPurchased(false)
       setGoodsName(item.name)
       setGoodsPrice(item.price)
-      setEditGoods(!editGoods)
+      setGoodsPurchased(item.purchased)
+      setGoodsCategory(item.category)
+      setShowEditGoods(!showEditGoods)
    }
 
    function closeOptions() {
       setOptions(false)
-      setEditGoods(false)
+      setShowConfirmDelete(false)
+      setShowEditGoods(false)
+      setShowPurchased(false)
    }
 
    function controlOptions(ee, id) {
@@ -100,12 +131,24 @@ function Goods(props) {
       }
       setGoodsId(id)
       setOptions(true)
-      setEditGoods(false)
+      setShowEditGoods(false)
+      setShowPurchased(false)
+      setShowConfirmDelete(false)
+   }
+   function controlPurchasedPrice() {
+      setShowConfirmDelete(false)
+      setShowEditGoods(false)
+      setShowPurchased(!showPurchased)
+   }
+   function controlConfirmDelete() {
+      setShowEditGoods(false)
+      setShowPurchased(false)
+      setShowConfirmDelete(!showConfirmDelete)
    }
 
    if (!goods.length && !nothing) return <Loadere />
    return (
-      <div onClick={() => closeOptions()} className='goods'>
+      <div onClick={closeOptions} className='goods'>
          <div className='d-flex'>
             <input onChange={ee => setSearch(ee.target.value)} value={search} type="text" className='form-control' placeholder='izlash' required />
          </div>
@@ -127,16 +170,31 @@ function Goods(props) {
                      {options && goodsId === item._id &&
                         <div onClick={ee => ee.stopPropagation()} className="goods__options noget">
                            <div className='goods__options__main'>
-                              <h6 onClick={() => removeGoods(item._id)}> <i className='bi bi-trash cred'></i> O'chirish</h6>
+                              <h6 onClick={() => controlConfirmDelete(item._id)}> <i className='bi bi-trash cred'></i> O'chirish</h6>
                               <h6 onClick={() => controlEditGoods(item)}> <i className='bi bi-pen-fill'></i> Yangilash</h6>
+                              <h6 onClick={() => controlPurchasedPrice(item)}> <i className="bi bi-arrow-down-square-fill"></i> </h6>
                            </div>
-                           {editGoods &&
+                           {showConfirmDelete && <h6 onClick={ee => removeGoods(item._id)} className='goods__options__edit cred'>O'chirish</h6>
+                           
+                           }
+
+                           {showEditGoods &&
                               <div className='goods__options__edit'>
                                  <textarea onChange={ee => setGoodsName(ee.target.value)} value={goodsName} placeholder={item.name} type="text" className='form-control py-1' required></textarea>
-                                 <input onChange={ee => setGoodsPrice(ee.target.value)} value={goodsPrice} placeholder={item.price} type="number" className='form-control py-1' required />
+                                 <div className='d-flex gap-1'>
+                                    <input onChange={ee => setGoodsPurchased(ee.target.value)} value={goodsPurchased} placeholder={item.purchased} type="number" className='form-control py-1' required />
+                                    <input onChange={ee => setGoodsPrice(ee.target.value)} value={goodsPrice} placeholder={item.price} type="number" className='form-control py-1' required />
+                                 </div>
+                                 <select onChange={ee => setGoodsCategory(ee.target.value)} className="form-select" required>
+                                    <option value={item.category}>{item.category}</option>
+                                    {categories.map(cat => (
+                                       <option defaultValue={cat.catName} value={cat.catName} key={cat._id}>{cat.catName}</option>
+                                    ))}
+                                 </select>
                                  <button onClick={() => editGoodsInfo(item._id)} type='button' className='bta bgreen py-1'>Saqlash</button>
                               </div>
                            }
+                           {showPurchased && <h6 className='goods__options__edit'>Olingan narx: {item.purchased}</h6>}
                         </div>
                      }
                   </div>

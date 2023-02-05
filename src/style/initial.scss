@@ -58,7 +58,6 @@ body,
    height: 100%;
 }
 .main-app {
-   width: 360px;
    margin: 0 auto;
    min-height: 100%;
    display: flex;
@@ -68,12 +67,17 @@ body,
 
 
 // // //   LAYOUT   // // //
+.navCona {
+   background-color: $m-purple;
+}
 .header {
+   margin: 0 auto;
+   max-width: 800px;
    display: flex;
    justify-content: space-between;
    align-items: center;
-   background-color: $m-purple;
    padding: 15px 20px !important;
+   
    color: white;
    .brand-cona {
       .nav-brand {
@@ -103,9 +107,12 @@ body,
 }
 
 .section {
-   min-height: 100%;
    flex: 1;
+   width: 100%;
+   max-width: 800px;
+   min-height: 100%;
    padding: 15px 2% !important;
+   margin: 0 auto;
    display: flex;
    flex-direction: column;
 }
@@ -150,7 +157,7 @@ body,
 }
 
 .cred {
-   color: red;
+   color: red !important;
 }
 .cgreen {
    color: rgb(0, 220, 0);
@@ -209,4 +216,24 @@ body,
    opacity: 0;
    transform: translateX(-100px);
    transition: all .4s;
+}
+
+
+@media (min-width: 600px) {
+   .header {
+      justify-content: center;
+      gap: 200px;
+   }   
+}
+@media (min-width: 700px) {
+   .header {
+      justify-content: center;
+      gap: 250px;
+   }   
+}
+@media (min-width: 800px) {
+   .header {
+      justify-content: center;
+      gap: 300px;
+   }   
 }

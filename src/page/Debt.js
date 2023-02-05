@@ -23,7 +23,7 @@ function Debt(props) {
    useEffect(() => {
       dispatch(setActiveLink("Debt"))
       if (user) {
-         fetch('https://axror.onrender.com/debt/all', {
+         fetch('/debt/all', {
             method: 'GET',
             headers: {
                'Access-Control-Allow-Origin': '*',

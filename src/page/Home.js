@@ -20,7 +20,7 @@ function Home(props) {
 
    useEffect(() => {
       dispatch(setActiveLink('Home'))
-      fetch('https://axror.onrender.com/category/all', {
+      fetch('/category/all', {
          method: "GET",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -29,10 +29,11 @@ function Home(props) {
             "auth-token": token
          }
       }).then(result => result.json()).then(data => {
+
          if (data.error) return navigate('/signin')
          dispatch(setCategories(data.data))
-         console.log(data);
          if (!data.data.length) setNothing(true)
+         
       }).catch(ex => {
          console.log(ex);
       })

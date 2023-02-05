@@ -23,7 +23,7 @@ function NewCategory({ modalCategory, setModalCategory }) {
       if (catName.length < 3 && catName > 50) return
       setLoading(true)
 
-      fetch('https://axror.onrender.com/category/add', {
+      fetch('/category/add', {
          method: 'POST',
          headers: {
             'Access-Control-Allow-Origin': '*',

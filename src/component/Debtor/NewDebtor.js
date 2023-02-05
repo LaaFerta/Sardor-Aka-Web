@@ -25,7 +25,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
       setLoading(true)
 
       setTimeout(() => {
-         fetch('https://axror.onrender.com/debt/add', {
+         fetch('/debt/add', {
             method: "POST",
             headers: {
                'Access-Control-Allow-Origin': '*',
@@ -37,7 +37,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
          }).then(result => result.json()).then(newDebtor => {
             console.log(newDebtor);
 
-            fetch(`https://axror.onrender.com/debt/debtor/new/${newDebtor.data._id}`, {
+            fetch(`/debt/debtor/new/${newDebtor.data._id}`, {
                method: 'PUT',
                headers: {
                   'Access-Control-Allow-Origin': '*',

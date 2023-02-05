@@ -15,7 +15,7 @@ function NewDebtForm({debtorId, totalPrice}) {
    function addNewDebt(amount) {
       if(amount > 9999999 || amount < 500) return
       setIsDisable(true)
-      fetch(`https://axror.onrender.com/debt/debtor/new/${debtorId}`, {
+      fetch(`/debtor/new/${debtorId}`, {
          method: 'PUT',
          headers: {
             'Access-Control-Allow-Origin': '*',

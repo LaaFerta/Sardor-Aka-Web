@@ -10,7 +10,8 @@ import { setGoods } from '../../redux/debtActions';
 function NewGoods({ modalGoods, setModalGoods }) {
    const [name, setName] = useState('')
    const [price, setPrice] = useState('')
-   const [category, setCategory] = useState('All')
+   const [purchased, setPurchased] = useState('')
+   const [category, setCategory] = useState('')
    const [loading, setLoading] = useState(false)
    const token = localStorage.getItem('token188')
    const categories = useSelector(state => state.categories)
@@ -21,10 +22,10 @@ function NewGoods({ modalGoods, setModalGoods }) {
    function addGoods(ee) {
       ee.preventDefault()
 
-      if (name.length > 70 && +price > 9999999 && +price < 500) return
+      if (name.length > 70 || +price > 9999999 || +price < 500 || +purchased > 9999999 || +purchased < 100 || !category || category === "select") return
       setLoading(true)
 
-      fetch('https://axror.onrender.com/goods/add', {
+      fetch('/goods/add', {
          method: 'post',
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -32,7 +33,7 @@ function NewGoods({ modalGoods, setModalGoods }) {
             "Content-Type": 'application/json',
             "auth-token": token
          },
-         body: JSON.stringify({ name, price: +price, tag: [category], updatedAt: Date.now() })
+         body: JSON.stringify({ name, price: +price, purchased: +purchased, category, updatedAt: Date.now() })
       }).then(result => result.json())
          .then(data => {
             setLoading(false)
@@ -59,12 +60,19 @@ function NewGoods({ modalGoods, setModalGoods }) {
                   <input onChange={ee => setName(ee.target.value)} value={name} type="text" className="form-control" id="title" placeholder="tovar nomi" required />
                   <label htmlFor="title">tovar nomi</label>
                </div>
-               <div className="form-floating mb-3">
-                  <input onChange={ee => setPrice(ee.target.value)} value={price} type="number" className="form-control" id="price" placeholder="narx" required />
-                  <label htmlFor="price">narx</label>
+               <div className='d-flex gap-1'>
+                  <div className="form-floating mb-3">
+                     <input onChange={ee => setPurchased(ee.target.value)} value={purchased} type="number" className="form-control" id="price" placeholder="oliingan narx" required />
+                     <label htmlFor="price">olingan narx</label>
+                  </div>
+                  <div className="form-floating mb-3">
+                     <input onChange={ee => setPrice(ee.target.value)} value={price} type="number" className="form-control" id="price" placeholder="narx" required />
+                     <label htmlFor="price">narx</label>
+                  </div>
                </div>
                <div className="mb-3">
-                  <select onChange={ee => setCategory(ee.target.value)} defaultValue={category} className="form-select" required>
+                  <select onChange={ee => setCategory(ee.target.value)} className="form-select" required>
+                     <option value={false}>select</option>
                      {categories.map(cat => (
                         <option value={cat.catName} key={cat._id}>{cat.catName}</option>
                      ))}

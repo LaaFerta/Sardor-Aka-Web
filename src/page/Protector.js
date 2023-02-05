@@ -16,7 +16,7 @@ function Protector(props) {
       if (user) dispatch(setSignedIn(user))
       else {
          dispatch(setSignedOut())
-         navigate('/signin')
+         // navigate('/signin')
       }
       // eslint-disable-next-line
    }, [])

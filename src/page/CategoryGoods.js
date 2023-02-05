@@ -26,16 +26,19 @@ function CategoryGoods(props) {
 
    useEffect(() => {
       dispatch(setCategoryGoodsToNull())
-      fetch(`https://axror.onrender.com/goods/category/${name}`, {
+      fetch(`/goods/category/${name}`, {
          method: 'get',
          headers: {
             "Content-Type": "application/json",
             "auth-token": token
          }
       }).then(result => result.json()).then(data => {
+
          if (!data.data.length) setNothing(true)
          dispatch(setCategoryGoods(data.data))
+
       }).catch(ex => console.log(ex))
+      
       // eslint-disable-next-line
    }, [name])
 
@@ -59,7 +62,7 @@ function CategoryGoods(props) {
    }
 
    function editGoodsInfo(goodsId) {
-      fetch(`https://axror.onrender.com/goods/edit/${goodsId}`, {
+      fetch(`/goods/edit/${goodsId}`, {
          method: "PUT",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -107,9 +110,7 @@ function CategoryGoods(props) {
       setEditGoods(false)
    }
 
-   // if(token) {
-   //    if(nothing) return
-   // }
+
    if (!catGoods.length && !nothing) return <Loadere />
    return (
       <div onClick={() => closeOptions()} className='goods'>
