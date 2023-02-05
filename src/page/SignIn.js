@@ -1,6 +1,5 @@
 
 
-import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -21,14 +20,15 @@ function SignIn(props) {
       ee.preventDefault()
       setLoading(true)
 
-      fetch("/auth/signin" ,{
+      fetch("/auth/signin", {
          method: "post",
          headers: {
+            
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'post',
             "Content-Type": "application/json",
          },
-         body: JSON.stringify({username, password})
+         body: JSON.stringify({ username, password })
       }).then(result => result.json()).then(data => {
          if (data.error) return toastError(data.error)
 
