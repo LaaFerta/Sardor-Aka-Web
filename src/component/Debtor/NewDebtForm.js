@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setDebtors } from '../../redux/debtActions';
 import { numberWithCommas } from '../../www/element/utils';
 
+
 function NewDebtForm({debtorId, totalPrice}) {
    const [amount, setAmount] = useState('')
    const token = localStorage.getItem('token188')
@@ -12,10 +13,11 @@ function NewDebtForm({debtorId, totalPrice}) {
    const dispatch = useDispatch()
    const debtors = useSelector(state => state.debtors)
 
+
    function addNewDebt(amount) {
       if(amount > 9999999 || amount < 500) return
       setIsDisable(true)
-      fetch(`/debtor/new/${debtorId}`, {
+      fetch(`https://upset-sandals-colt.cyclic.app/debtor/new/${debtorId}`, {
          method: 'PUT',
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -35,6 +37,7 @@ function NewDebtForm({debtorId, totalPrice}) {
       }).catch(ex => console.log(ex))
    }
 
+   
    return (
       <div className='newdebtform-inner'>
          <div className='debtor__total-price'>

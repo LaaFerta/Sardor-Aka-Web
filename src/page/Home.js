@@ -8,6 +8,7 @@ import NewGoods from '../component/Goods/NewGoods';
 import { setActiveLink, setCategories } from '../redux/debtActions';
 import Loadere from '../www/ui/Loader/Loadere';
 
+
 function Home(props) {
    const [modalGoods, setModalGoods] = useState(false)
    const [modalCategory, setModalCategory] = useState(false)
@@ -40,6 +41,7 @@ function Home(props) {
       // eslint-disable-next-line
    }, [])
 
+
    if (!categories.length && !nothing) return <Loadere />
    return (
       <div className='home'>
@@ -60,5 +62,6 @@ function Home(props) {
       </div>
    );
 }
+
 
 export default Home;

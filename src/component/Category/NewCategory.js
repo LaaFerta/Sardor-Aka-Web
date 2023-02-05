@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCategories } from '../../redux/debtActions';
 import Loadere from '../../www/ui/Loader/Loadere';
 
+
 function NewCategory({ modalCategory, setModalCategory }) {
    const [catName, setCatName] = useState('')
    const [loading, setLoading] = useState(false)
@@ -13,17 +14,17 @@ function NewCategory({ modalCategory, setModalCategory }) {
    const dispatch = useDispatch()
    const categories = useSelector(state => state.categories)
 
+
    useEffect(() => {
       inputRef.current.focus()
    }, [])
-
 
    function addCategory(ee) {
       ee.preventDefault()
       if (catName.length < 3 && catName > 50) return
       setLoading(true)
 
-      fetch('/category/add', {
+      fetch('https://upset-sandals-colt.cyclic.app/category/add', {
          method: 'POST',
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -45,6 +46,7 @@ function NewCategory({ modalCategory, setModalCategory }) {
       })
    }
 
+   
    return (
       <div className="acmodal">
          <div className='acmodal__content'>

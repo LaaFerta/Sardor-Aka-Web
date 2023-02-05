@@ -15,9 +15,9 @@ function Debtor({ debtor }) {
    const debtors = useSelector(state => state.debtors)
    const dispatch = useDispatch()
 
-
+   
    function removeDebtor(debtorId) {
-      fetch(`/debt/remove/${debtorId}`, {
+      fetch(`https://upset-sandals-colt.cyclic.app/debt/remove/${debtorId}`, {
          method: "DELETE",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -32,7 +32,7 @@ function Debtor({ debtor }) {
    }
 
    function removeSingleDebt(debtorId, debtId) {
-      fetch(`/debt/debtor/${debtorId}`, {
+      fetch(`https://upset-sandals-colt.cyclic.app/debt/debtor/${debtorId}`, {
          method: "PUT",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -50,7 +50,7 @@ function Debtor({ debtor }) {
          dispatch(setDebtors(newArray))
 
          if (data.result.debts.length === 0) {
-            fetch(`/debt/remove/${debtorId}`, {
+            fetch(`https://upset-sandals-colt.cyclic.app/debt/remove/${debtorId}`, {
                method: "DELETE",
                headers: {
                   'Access-Control-Allow-Origin': '*',
@@ -79,6 +79,7 @@ function Debtor({ debtor }) {
       setOptions(false)
       setExpand(false)
    }
+
 
    return (
       <div className={expand ? 'debtor expand-debt' : 'debtor'}>

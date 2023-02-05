@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router';
 import { setSignedIn, setSignedOut } from '../redux/debtActions';
 import SignIn from './SignIn';
-import SignUp from './SignUp';
+
 
 function Protector(props) {
    const dispatch = useDispatch()

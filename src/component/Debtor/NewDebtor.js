@@ -7,6 +7,7 @@ import '../../style/modal.scss'
 import { setDebtors } from '../../redux/debtActions';
 import Loadere from '../../www/ui/Loader/Loadere';
 
+
 function NewDebtor({ showNewDebt, setShowNewDebt }) {
    const [debtor, setDebtor] = useState('')
    const [amount, setAmount] = useState('')
@@ -15,6 +16,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
    const inputRef = useRef()
    const dispatch = useDispatch()
    const debtors = useSelector(state => state.debtors)
+
 
    useEffect(() => {
       inputRef.current.focus()
@@ -25,7 +27,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
       setLoading(true)
 
       setTimeout(() => {
-         fetch('/debt/add', {
+         fetch('https://upset-sandals-colt.cyclic.app/debt/add', {
             method: "POST",
             headers: {
                'Access-Control-Allow-Origin': '*',
@@ -37,7 +39,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
          }).then(result => result.json()).then(newDebtor => {
             console.log(newDebtor);
 
-            fetch(`/debt/debtor/new/${newDebtor.data._id}`, {
+            fetch(`https://upset-sandals-colt.cyclic.app/debt/debtor/new/${newDebtor.data._id}`, {
                method: 'PUT',
                headers: {
                   'Access-Control-Allow-Origin': '*',
@@ -64,6 +66,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
       }, 500);
    }
 
+   
    return (
       <div className="acmodal">
          <div className='acmodal__content'>

@@ -7,11 +7,10 @@ import { numberWithCommas, toastSuccess } from '../www/element/utils';
 import Loadere from '../www/ui/Loader/Loadere';
 
 
-
 function Goods(props) {
    const [search, setSearch] = useState('')
-   const [options, setOptions] = useState(false)
    const [goodsId, setGoodsId] = useState('')
+   const [options, setOptions] = useState(false)
 
    const [showConfirmDelete, setShowConfirmDelete] = useState(false)
    const [showEditGoods, setShowEditGoods] = useState(false)
@@ -21,7 +20,6 @@ function Goods(props) {
    const [goodsPrice, setGoodsPrice] = useState('')
    const [goodsPurchased, setGoodsPurchased] = useState('')
    const [goodsCategory, setGoodsCategory] = useState('')
-
 
    const token = localStorage.getItem('token188')
    const goods = useSelector(state => state.goods)
@@ -46,7 +44,7 @@ function Goods(props) {
          dispatch(setGoods(data.data))
       }).catch(ex => console.log(ex))
 
-      fetch('/category/all', {
+      fetch('https://upset-sandals-colt.cyclic.app/category/all', {
          method: "GET",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -67,7 +65,7 @@ function Goods(props) {
    }, [])
 
    function removeGoods(goodsId) {
-      fetch(`/goods/remove/${goodsId}`, {
+      fetch(`https://upset-sandals-colt.cyclic.app/goods/remove/${goodsId}`, {
          method: "DELETE",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -85,7 +83,7 @@ function Goods(props) {
    }
 
    function editGoodsInfo(goodsId) {
-      fetch(`/goods/edit/${goodsId}`, {
+      fetch(`https://upset-sandals-colt.cyclic.app/goods/edit/${goodsId}`, {
          method: "PUT",
          headers: {
             'Access-Control-Allow-Origin': '*',

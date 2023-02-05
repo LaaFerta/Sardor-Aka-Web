@@ -7,6 +7,7 @@ import '../../style/modal.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { setGoods } from '../../redux/debtActions';
 
+
 function NewGoods({ modalGoods, setModalGoods }) {
    const [name, setName] = useState('')
    const [price, setPrice] = useState('')
@@ -25,7 +26,7 @@ function NewGoods({ modalGoods, setModalGoods }) {
       if (name.length > 70 || +price > 9999999 || +price < 500 || +purchased > 9999999 || +purchased < 100 || !category || category === "select") return
       setLoading(true)
 
-      fetch('/goods/add', {
+      fetch('https://upset-sandals-colt.cyclic.app/goods/add', {
          method: 'post',
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -48,6 +49,7 @@ function NewGoods({ modalGoods, setModalGoods }) {
             console.log(ex);
          })
    }
+
 
    return (
       <div className="acmodal">

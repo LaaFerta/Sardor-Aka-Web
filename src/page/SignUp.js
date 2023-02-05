@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toastError, toastSuccess } from '../www/element/utils';
 
+
 function SignUp(props) {
    const [username, setUsername] = useState('')
    const [password, setPassword] = useState('')
@@ -11,7 +12,7 @@ function SignUp(props) {
 
    function signup(ee) {
       ee.preventDefault()
-      fetch('/auth/signup', {
+      fetch('https://upset-sandals-colt.cyclic.app/auth/signup', {
          method: "post",
          headers: {"Content-Type": "application/json"},
          body: JSON.stringify({username, password})

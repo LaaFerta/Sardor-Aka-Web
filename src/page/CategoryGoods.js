@@ -26,7 +26,7 @@ function CategoryGoods(props) {
 
    useEffect(() => {
       dispatch(setCategoryGoodsToNull())
-      fetch(`/goods/category/${name}`, {
+      fetch(`https://upset-sandals-colt.cyclic.app/goods/category/${name}`, {
          method: 'get',
          headers: {
             "Content-Type": "application/json",
@@ -43,7 +43,7 @@ function CategoryGoods(props) {
    }, [name])
 
    function removeGoods(goodsId) {
-      fetch(`/goods/remove/${goodsId}`, {
+      fetch(`https://upset-sandals-colt.cyclic.app/goods/remove/${goodsId}`, {
          method: "delete",
          headers: {
             "Content-Type": "application/json",
@@ -62,7 +62,7 @@ function CategoryGoods(props) {
    }
 
    function editGoodsInfo(goodsId) {
-      fetch(`/goods/edit/${goodsId}`, {
+      fetch(`https://upset-sandals-colt.cyclic.app/goods/edit/${goodsId}`, {
          method: "PUT",
          headers: {
             'Access-Control-Allow-Origin': '*',
