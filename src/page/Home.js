@@ -20,7 +20,7 @@ function Home(props) {
 
    useEffect(() => {
       dispatch(setActiveLink('Home'))
-      fetch('/category/all', {
+      fetch('https://upset-sandals-colt.cyclic.app/category/all', {
          method: "GET",
          headers: {
             'Access-Control-Allow-Origin': '*',

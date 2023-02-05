@@ -20,10 +20,10 @@ function SignIn(props) {
       ee.preventDefault()
       setLoading(true)
 
-      fetch("/auth/signin", {
+      fetch("https://upset-sandals-colt.cyclic.app/auth/signin", {
          method: "post",
          headers: {
-            
+            "mode": "no-cors",
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'post',
             "Content-Type": "application/json",

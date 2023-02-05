@@ -23,7 +23,7 @@ function Debt(props) {
    useEffect(() => {
       dispatch(setActiveLink("Debt"))
       if (user) {
-         fetch('/debt/all', {
+         fetch('https://upset-sandals-colt.cyclic.app/debt/all', {
             method: 'GET',
             headers: {
                'Access-Control-Allow-Origin': '*',

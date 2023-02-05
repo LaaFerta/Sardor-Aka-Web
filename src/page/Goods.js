@@ -32,7 +32,7 @@ function Goods(props) {
 
    useEffect(() => {
       dispatch(setActiveLink("Goods"))
-      fetch('/goods/all', {
+      fetch('https://upset-sandals-colt.cyclic.app/goods/all', {
          method: 'GET',
          headers: {
             'Access-Control-Allow-Origin': '*',

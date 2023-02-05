@@ -2,7 +2,6 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://upset-sandals-colt.cyclic.app",
   "author": "IC Deis",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
