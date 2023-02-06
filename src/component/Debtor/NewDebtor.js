@@ -12,10 +12,13 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
    const [debtor, setDebtor] = useState('')
    const [amount, setAmount] = useState('')
    const [loading, setLoading]= useState(false)
+
    const token = localStorage.getItem('token188')
+   const debtors = useSelector(state => state.debtors)
+   const baseURL = useSelector(state => state.baseURL)
+   
    const inputRef = useRef()
    const dispatch = useDispatch()
-   const debtors = useSelector(state => state.debtors)
 
 
    useEffect(() => {
@@ -27,7 +30,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
       setLoading(true)
 
       setTimeout(() => {
-         fetch('https://upset-sandals-colt.cyclic.app/debt/add', {
+         fetch(`${baseURL}/debt/add`, {
             method: "POST",
             headers: {
                'Access-Control-Allow-Origin': '*',
@@ -39,7 +42,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
          }).then(result => result.json()).then(newDebtor => {
             console.log(newDebtor);
 
-            fetch(`https://upset-sandals-colt.cyclic.app/debt/debtor/new/${newDebtor.data._id}`, {
+            fetch(`${baseURL}/debt/debtor/new/${newDebtor.data._id}`, {
                method: 'PUT',
                headers: {
                   'Access-Control-Allow-Origin': '*',

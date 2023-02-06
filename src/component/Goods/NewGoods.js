@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { toastError, toastSuccess } from '../../www/element/utils';
 import Loadere from '../../www/ui/Loader/Loadere';
 import '../../style/modal.scss'
@@ -14,19 +14,27 @@ function NewGoods({ modalGoods, setModalGoods }) {
    const [purchased, setPurchased] = useState('')
    const [category, setCategory] = useState('')
    const [loading, setLoading] = useState(false)
+
    const token = localStorage.getItem('token188')
    const categories = useSelector(state => state.categories)
    const goods = useSelector(state => state.goods)
+   const baseURL = useSelector(state => state.baseURL)
+   
    const dispatch = useDispatch()
+   const titleInputRef = useRef()
 
+
+   useEffect(() => {
+      titleInputRef.current.focus()
+   }, [])
 
    function addGoods(ee) {
       ee.preventDefault()
 
-      if (name.length > 70 || +price > 9999999 || +price < 500 || +purchased > 9999999 || +purchased < 100 || !category || category === "select") return
+      if (name.length > 70 || +price > 9999999 || +price < 500 || +purchased > 9999999 || +purchased < 100 || !category || category === "toifa") return
       setLoading(true)
 
-      fetch('https://upset-sandals-colt.cyclic.app/goods/add', {
+      fetch(`${baseURL}/goods/add`, {
          method: 'post',
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -59,7 +67,7 @@ function NewGoods({ modalGoods, setModalGoods }) {
             <form onSubmit={ee => addGoods(ee)} className="acform">
                <h4 className='acform__title'>Yangi tovar</h4>
                <div className="form-floating mb-3">
-                  <input onChange={ee => setName(ee.target.value)} value={name} type="text" className="form-control" id="title" placeholder="tovar nomi" required />
+                  <input onChange={ee => setName(ee.target.value)} value={name} ref={titleInputRef} type="text" className="form-control" id="title" placeholder="tovar nomi" required />
                   <label htmlFor="title">tovar nomi</label>
                </div>
                <div className='d-flex gap-1'>
@@ -74,7 +82,7 @@ function NewGoods({ modalGoods, setModalGoods }) {
                </div>
                <div className="mb-3">
                   <select onChange={ee => setCategory(ee.target.value)} className="form-select" required>
-                     <option value={false}>select</option>
+                     <option value={"toifa"}>toifa</option>
                      {categories.map(cat => (
                         <option value={cat.catName} key={cat._id}>{cat.catName}</option>
                      ))}

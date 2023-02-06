@@ -11,19 +11,22 @@ import NewDebtor from '../component/Debtor/NewDebtor';
 
 function Debt(props) {
    const [showNewDebt, setShowNewDebt] = useState(false)
+   const [nothing, setNothing] = useState(false)
+   const [search, setSearch] = useState('')
+
    const token = localStorage.getItem('token188')
    const user = localStorage.getItem('user188')
-   const [search, setSearch] = useState('')
    const debtors = useSelector(state => state.debtors)
+   const baseURL = useSelector(state => state.baseURL)
+   
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const [nothing, setNothing] = useState(false)
 
 
    useEffect(() => {
       dispatch(setActiveLink("Debt"))
       if (user) {
-         fetch('https://upset-sandals-colt.cyclic.app/debt/all', {
+         fetch(`${baseURL}/debt/all`, {
             method: 'GET',
             headers: {
                'Access-Control-Allow-Origin': '*',
@@ -50,9 +53,7 @@ function Debt(props) {
    return (
       <div className='debt'>
          <button onClick={() => setShowNewDebt(true)} className='bta w-100 mb-1'>Yangi qarzdor</button>
-         <div className='d-flex'>
-            <input onChange={ee => setSearch(ee.target.value)} type="text" className='form-control' placeholder='izlash' required />
-         </div>
+         <input onChange={ee => setSearch(ee.target.value)} type="text" className='form-control' placeholder='izlash' required />
          {showNewDebt && <NewDebtor showNewDebt={showNewDebt} setShowNewDebt={setShowNewDebt} />}
          {nothing && <h5 className='nothing'>Hech narsa topilmadi</h5>}
          <div className='debtors-list'>
@@ -61,7 +62,7 @@ function Debt(props) {
                   ? debtor
                   : debtor.debtor.toLowerCase().includes(search.toLowerCase())
             )).map(debtor => (
-                  <Debtor debtor={debtor} key={debtor._id} />
+               <Debtor debtor={debtor} key={debtor._id} />
             )).reverse()}
          </div>
       </div>

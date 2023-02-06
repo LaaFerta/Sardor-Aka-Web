@@ -12,16 +12,19 @@ import Loadere from '../www/ui/Loader/Loadere';
 function Home(props) {
    const [modalGoods, setModalGoods] = useState(false)
    const [modalCategory, setModalCategory] = useState(false)
+   const [nothing, setNothing] = useState(false)
+
    const token = localStorage.getItem('token188')
    const categories = useSelector(state => state.categories)
+   const baseURL = useSelector(state => state.baseURL)
+   
    const dispatch = useDispatch()
-   const [nothing, setNothing] = useState(false)
    const navigate = useNavigate()
 
 
    useEffect(() => {
       dispatch(setActiveLink('Home'))
-      fetch('https://upset-sandals-colt.cyclic.app/category/all', {
+      fetch(`${baseURL}/category/all`, {
          method: "GET",
          headers: {
             'Access-Control-Allow-Origin': '*',

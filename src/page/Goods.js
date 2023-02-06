@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setActiveLink, setCategories, setGoods } from '../redux/debtActions';
 import { numberWithCommas, toastSuccess } from '../www/element/utils';
 import Loadere from '../www/ui/Loader/Loadere';
+import moment from 'moment';
+import 'moment/locale/uz-latn'
+moment.locale("uz-latn")
 
 
 function Goods(props) {
@@ -26,11 +29,12 @@ function Goods(props) {
    const categories = useSelector(state => state.categories)
    const dispatch = useDispatch()
    const [nothing, setNothing] = useState(false)
+   const baseURL = useSelector(state => state.baseURL)
 
 
    useEffect(() => {
       dispatch(setActiveLink("Goods"))
-      fetch('https://upset-sandals-colt.cyclic.app/goods/all', {
+      fetch(`${baseURL}/goods/all`, {
          method: 'GET',
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -44,7 +48,7 @@ function Goods(props) {
          dispatch(setGoods(data.data))
       }).catch(ex => console.log(ex))
 
-      fetch('https://upset-sandals-colt.cyclic.app/category/all', {
+      fetch(`${baseURL}/category/all`, {
          method: "GET",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -65,7 +69,7 @@ function Goods(props) {
    }, [])
 
    function removeGoods(goodsId) {
-      fetch(`https://upset-sandals-colt.cyclic.app/goods/remove/${goodsId}`, {
+      fetch(`${baseURL}/goods/remove/${goodsId}`, {
          method: "DELETE",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -83,7 +87,7 @@ function Goods(props) {
    }
 
    function editGoodsInfo(goodsId) {
-      fetch(`https://upset-sandals-colt.cyclic.app/goods/edit/${goodsId}`, {
+      fetch(`${baseURL}/goods/edit/${goodsId}`, {
          method: "PUT",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -133,17 +137,20 @@ function Goods(props) {
       setShowPurchased(false)
       setShowConfirmDelete(false)
    }
+
    function controlPurchasedPrice() {
       setShowConfirmDelete(false)
       setShowEditGoods(false)
       setShowPurchased(!showPurchased)
    }
+
    function controlConfirmDelete() {
       setShowEditGoods(false)
       setShowPurchased(false)
       setShowConfirmDelete(!showConfirmDelete)
    }
 
+   
    if (!goods.length && !nothing) return <Loadere />
    return (
       <div onClick={closeOptions} className='goods'>
@@ -172,12 +179,10 @@ function Goods(props) {
                               <h6 onClick={() => controlEditGoods(item)}> <i className='bi bi-pen-fill'></i> Yangilash</h6>
                               <h6 onClick={() => controlPurchasedPrice(item)}> <i className="bi bi-arrow-down-square-fill"></i> </h6>
                            </div>
-                           {showConfirmDelete && <h6 onClick={ee => removeGoods(item._id)} className='goods__options__edit cred'>O'chirish</h6>
-                           
-                           }
+                           {showConfirmDelete && <h6 onClick={ee => removeGoods(item._id)} className='goods__options__info cred'>O'chirish</h6>}
 
                            {showEditGoods &&
-                              <div className='goods__options__edit'>
+                              <div className='goods__options__info'>
                                  <textarea onChange={ee => setGoodsName(ee.target.value)} value={goodsName} placeholder={item.name} type="text" className='form-control py-1' required></textarea>
                                  <div className='d-flex gap-1'>
                                     <input onChange={ee => setGoodsPurchased(ee.target.value)} value={goodsPurchased} placeholder={item.purchased} type="number" className='form-control py-1' required />
@@ -192,7 +197,10 @@ function Goods(props) {
                                  <button onClick={() => editGoodsInfo(item._id)} type='button' className='bta bgreen py-1'>Saqlash</button>
                               </div>
                            }
-                           {showPurchased && <h6 className='goods__options__edit'>Olingan narx: {item.purchased}</h6>}
+                           {showPurchased && <div className='goods__options__info'>
+                              <span className='text-center'>Olingan narx: <strong>{numberWithCommas(item.purchased)}</strong> </span>
+                              <span className='text-center'><i className='bi bi-calendar-date'> </i> {moment(item.updatedAt).format('LL')}</span>
+                           </div>}
                         </div>
                      }
                   </div>

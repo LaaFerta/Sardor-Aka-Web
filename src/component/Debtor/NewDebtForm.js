@@ -12,12 +12,13 @@ function NewDebtForm({debtorId, totalPrice}) {
    const [isDisable, setIsDisable] = useState(false)
    const dispatch = useDispatch()
    const debtors = useSelector(state => state.debtors)
+   const baseURL = useSelector(state => state.baseURL)
 
 
    function addNewDebt(amount) {
       if(amount > 9999999 || amount < 500) return
       setIsDisable(true)
-      fetch(`https://upset-sandals-colt.cyclic.app/debtor/new/${debtorId}`, {
+      fetch(`${baseURL}/debtor/new/${debtorId}`, {
          method: 'PUT',
          headers: {
             'Access-Control-Allow-Origin': '*',

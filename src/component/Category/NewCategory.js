@@ -9,10 +9,13 @@ import Loadere from '../../www/ui/Loader/Loadere';
 function NewCategory({ modalCategory, setModalCategory }) {
    const [catName, setCatName] = useState('')
    const [loading, setLoading] = useState(false)
+
    const token = localStorage.getItem('token188')
+   const categories = useSelector(state => state.categories)
+   const baseURL = useSelector(state => state.baseURL)
+   
    const inputRef = useRef()
    const dispatch = useDispatch()
-   const categories = useSelector(state => state.categories)
 
 
    useEffect(() => {
@@ -24,7 +27,7 @@ function NewCategory({ modalCategory, setModalCategory }) {
       if (catName.length < 3 && catName > 50) return
       setLoading(true)
 
-      fetch('https://upset-sandals-colt.cyclic.app/category/add', {
+      fetch(`${baseURL}/category/add`, {
          method: 'POST',
          headers: {
             'Access-Control-Allow-Origin': '*',

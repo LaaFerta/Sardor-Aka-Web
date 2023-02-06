@@ -17,13 +17,12 @@
 
 .acmodal__content {
    width: 340px;
-   padding: 30px 20px;
-   background: rgb(255, 255, 255);
-   border: 1px solid rgb(215, 215, 215);
-   border-radius: 12px;
    position: absolute;
    top: 10%;
+   padding: 30px 20px;
    background-color: white;
+   border: 1px solid rgb(215, 215, 215);
+   border-radius: 12px;
    animation: show .3s ease;
 }
 

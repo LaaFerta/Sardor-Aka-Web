@@ -8,7 +8,8 @@ const initialState = {
    categories: [],
    goods: [],
    categoryGoods: [],
-   activeLink: undefined
+   activeLink: undefined,
+   baseURL: "https://upset-sandals-colt.cyclic.app"
 }
 
 function debtReducers(state = initialState, { type, payload }) {

@@ -19,6 +19,7 @@ function CategoryGoods(props) {
    const token = localStorage.getItem('token188')
    const goods = useSelector(state => state.goods)
    const catGoods = useSelector(state => state.categoryGoods)
+   const baseURL = useSelector(state => state.baseURL)
    const dispatch = useDispatch()
    const { name } = useParams()
    const [nothing, setNothing] = useState(false)
@@ -26,7 +27,7 @@ function CategoryGoods(props) {
 
    useEffect(() => {
       dispatch(setCategoryGoodsToNull())
-      fetch(`https://upset-sandals-colt.cyclic.app/goods/category/${name}`, {
+      fetch(`${baseURL}/goods/category/${name}`, {
          method: 'get',
          headers: {
             "Content-Type": "application/json",
@@ -43,7 +44,7 @@ function CategoryGoods(props) {
    }, [name])
 
    function removeGoods(goodsId) {
-      fetch(`https://upset-sandals-colt.cyclic.app/goods/remove/${goodsId}`, {
+      fetch(`${baseURL}/goods/remove/${goodsId}`, {
          method: "delete",
          headers: {
             "Content-Type": "application/json",
@@ -62,7 +63,7 @@ function CategoryGoods(props) {
    }
 
    function editGoodsInfo(goodsId) {
-      fetch(`https://upset-sandals-colt.cyclic.app/goods/edit/${goodsId}`, {
+      fetch(`${baseURL}/goods/edit/${goodsId}`, {
          method: "PUT",
          headers: {
             'Access-Control-Allow-Origin': '*',

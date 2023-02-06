@@ -1,6 +1,7 @@
 
 
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toastError, toastSuccess } from '../www/element/utils';
 
@@ -9,10 +10,12 @@ function SignUp(props) {
    const [username, setUsername] = useState('')
    const [password, setPassword] = useState('')
    const navigate = useNavigate()
+   const baseURL = useSelector(state => state.baseURL)
+
 
    function signup(ee) {
       ee.preventDefault()
-      fetch('https://upset-sandals-colt.cyclic.app/auth/signup', {
+      fetch(`${baseURL}/auth/signup`, {
          method: "post",
          headers: {"Content-Type": "application/json"},
          body: JSON.stringify({username, password})

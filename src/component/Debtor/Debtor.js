@@ -12,12 +12,13 @@ function Debtor({ debtor }) {
    const [options, setOptions] = useState(false)
    const [removeConfirm, setRemoveConfirm] = useState(false)
    const token = localStorage.getItem('token188')
-   const debtors = useSelector(state => state.debtors)
    const dispatch = useDispatch()
+   const debtors = useSelector(state => state.debtors)
+   const baseURL = useSelector(state => state.baseURL)
 
    
    function removeDebtor(debtorId) {
-      fetch(`https://upset-sandals-colt.cyclic.app/debt/remove/${debtorId}`, {
+      fetch(`${baseURL}/debt/remove/${debtorId}`, {
          method: "DELETE",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -32,7 +33,7 @@ function Debtor({ debtor }) {
    }
 
    function removeSingleDebt(debtorId, debtId) {
-      fetch(`https://upset-sandals-colt.cyclic.app/debt/debtor/${debtorId}`, {
+      fetch(`${baseURL}/debt/debtor/${debtorId}`, {
          method: "PUT",
          headers: {
             'Access-Control-Allow-Origin': '*',
@@ -50,7 +51,7 @@ function Debtor({ debtor }) {
          dispatch(setDebtors(newArray))
 
          if (data.result.debts.length === 0) {
-            fetch(`https://upset-sandals-colt.cyclic.app/debt/remove/${debtorId}`, {
+            fetch(`${baseURL}/debt/remove/${debtorId}`, {
                method: "DELETE",
                headers: {
                   'Access-Control-Allow-Origin': '*',
