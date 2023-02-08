@@ -18,7 +18,7 @@ function NewDebtForm({debtorId, totalPrice}) {
    function addNewDebt(amount) {
       if(amount > 9999999 || amount < 500) return
       setIsDisable(true)
-      fetch(`${baseURL}/debtor/new/${debtorId}`, {
+      fetch(`${baseURL}/debt/debtor/new/${debtorId}`, {
          method: 'PUT',
          headers: {
             'Access-Control-Allow-Origin': '*',

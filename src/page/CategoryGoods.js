@@ -6,19 +6,29 @@ import { setCategoryGoods, setCategoryGoodsToNull, setGoods } from '../redux/deb
 import { numberWithCommas, toastSuccess } from '../www/element/utils';
 import { useParams } from 'react-router';
 import Loadere from '../www/ui/Loader/Loadere';
+import moment from 'moment';
+import 'moment/locale/uz-latn'
+moment.locale("uz-latn")
 
 function CategoryGoods(props) {
    const [search, setSearch] = useState('')
    const [options, setOptions] = useState(false)
    const [goodsId, setGoodsId] = useState('')
 
-   const [editGoods, setEditGoods] = useState(false)
+   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
+   const [showEditGoods, setShowEditGoods] = useState(false)
+   const [showPurchased, setShowPurchased] = useState(false)
+
    const [goodsName, setGoodsName] = useState('')
    const [goodsPrice, setGoodsPrice] = useState('')
+   const [goodsPurchased, setGoodsPurchased] = useState('')
+   const [goodsCategory, setGoodsCategory] = useState('')
+
 
    const token = localStorage.getItem('token188')
    const goods = useSelector(state => state.goods)
    const catGoods = useSelector(state => state.categoryGoods)
+   const categories = useSelector(state => state.categories)
    const baseURL = useSelector(state => state.baseURL)
    const dispatch = useDispatch()
    const { name } = useParams()
@@ -39,7 +49,7 @@ function CategoryGoods(props) {
          dispatch(setCategoryGoods(data.data))
 
       }).catch(ex => console.log(ex))
-      
+
       // eslint-disable-next-line
    }, [name])
 
@@ -71,7 +81,7 @@ function CategoryGoods(props) {
             "Content-Type": "application/json",
             "auth-token": token
          },
-         body: JSON.stringify({ name: goodsName, price: +goodsPrice, updatedAt: Date.now() })
+         body: JSON.stringify({ name: goodsName, price: +goodsPrice, purchased: +goodsPurchased, category: goodsCategory, updatedAt: Date.now() })
       }).then(result => result.json()).then(data => {
 
          const newArray = goods.map(item => {
@@ -91,16 +101,21 @@ function CategoryGoods(props) {
    }
 
    function controlEditGoods(item) {
+      setShowConfirmDelete(false)
+      setShowPurchased(false)
       setGoodsName(item.name)
       setGoodsPrice(item.price)
-      setEditGoods(!editGoods)
+      setGoodsPurchased(item.purchased)
+      setGoodsCategory(item.category)
+      setShowEditGoods(!showEditGoods)
    }
 
    function closeOptions() {
       setOptions(false)
-      setEditGoods(false)
+      setShowConfirmDelete(false)
+      setShowEditGoods(false)
+      setShowPurchased(false)
    }
-
    function controlOptions(ee, id) {
       if (ee) ee.stopPropagation()
       if (goodsId === id) {
@@ -108,48 +123,119 @@ function CategoryGoods(props) {
       }
       setGoodsId(id)
       setOptions(true)
-      setEditGoods(false)
+      setShowEditGoods(false)
+      setShowPurchased(false)
+      setShowConfirmDelete(false)
    }
+   function controlPurchasedPrice() {
+      setShowConfirmDelete(false)
+      setShowEditGoods(false)
+      setShowPurchased(!showPurchased)
+   }
+
+   function controlConfirmDelete() {
+      setShowEditGoods(false)
+      setShowPurchased(false)
+      setShowConfirmDelete(!showConfirmDelete)
+   }
+
 
 
    if (!catGoods.length && !nothing) return <Loadere />
    return (
-      <div onClick={() => closeOptions()} className='goods'>
+      <div onClick={closeOptions} className='goods'>
          <div className='d-flex'>
-            <input onChange={ee => setSearch(ee.target.value)} value={search} type="text" className='form-control' placeholder='Search' required />
+            <input onChange={ee => setSearch(ee.target.value)} value={search} type="text" className='form-control' placeholder='izlash' required />
          </div>
          {nothing && <h5 className='nothing'>Hech narsa topilmadi</h5>}
+
          <div className='goods__list'>
             {catGoods.filter(item => (
                search === ''
                   ? item
                   : item.name.toLowerCase().includes(search.toLowerCase())
             )).map(item => (
-               <div className={options && goodsId === item._id ? "goods__item goods__item_expand" : 'goods__item'} key={item._id}>
+               <div className={options && goodsId === item._id ? "goods__item goods__item_expand" : 'goods__item'} key={item._id} >
                   <div className='goods__item__main'>
                      <span className='goods__item__name'>{item.name}</span>
                      <span className='goods__item__price'>{numberWithCommas(item.price)}</span>
 
                      <i onClick={ee => controlOptions(ee, item._id)} className="goods__item__options bi bi-list red8"></i>
 
-                     {options && goodsId === item._id && <div onClick={ee => ee.stopPropagation()} className="goods__options noget">
-                        <div className='goods__options__main'>
-                           <h6 onClick={() => removeGoods(item._id)}> <i className='bi bi-trash cred'></i> Delete</h6>
-                           <h6 onClick={() => controlEditGoods(item)}> <i className='bi bi-pen-fill'></i> Edit</h6>
-                        </div>
-                        {editGoods &&
-                           <div className='goods__options__edit'>
-                              <textarea onChange={ee => setGoodsName(ee.target.value)} value={goodsName} placeholder={item.name} type="text" className='form-control py-1' required></textarea>
-                              <input onChange={ee => setGoodsPrice(ee.target.value)} value={goodsPrice} placeholder={item.price} type="number" className='form-control py-1' required />
-                              <button onClick={() => editGoodsInfo(item._id)} type='button' className='bta bgreen py-1'>Save</button>
+                     {options && goodsId === item._id &&
+                        <div onClick={ee => ee.stopPropagation()} className="goods__options noget">
+                           <div className='goods__options__main'>
+                              <h6 onClick={() => controlConfirmDelete(item._id)}> <i className='bi bi-trash cred'></i> O'chirish</h6>
+                              <h6 onClick={() => controlEditGoods(item)}> <i className='bi bi-pen-fill'></i> Yangilash</h6>
+                              <h6 onClick={() => controlPurchasedPrice(item)}> <i className="bi bi-arrow-down-square-fill"></i> </h6>
                            </div>
-                        }
-                     </div>}
+                           {showConfirmDelete && <h6 onClick={ee => removeGoods(item._id)} className='goods__options__info cred'>O'chirish</h6>}
+
+                           {showEditGoods &&
+                              <div className='goods__options__info'>
+                                 <textarea onChange={ee => setGoodsName(ee.target.value)} value={goodsName} placeholder={item.name} type="text" className='form-control py-1' required></textarea>
+                                 <div className='d-flex gap-1'>
+                                    <input onChange={ee => setGoodsPurchased(ee.target.value)} value={goodsPurchased} placeholder={item.purchased} type="number" className='form-control py-1' required />
+                                    <input onChange={ee => setGoodsPrice(ee.target.value)} value={goodsPrice} placeholder={item.price} type="number" className='form-control py-1' required />
+                                 </div>
+                                 <select onChange={ee => setGoodsCategory(ee.target.value)} className="form-select" required>
+                                    <option value={item.category}>{item.category}</option>
+                                    {categories.map(cat => (
+                                       <option defaultValue={cat.catName} value={cat.catName} key={cat._id}>{cat.catName}</option>
+                                    ))}
+                                 </select>
+                                 <button onClick={() => editGoodsInfo(item._id)} type='button' className='bta bgreen py-1'>Saqlash</button>
+                              </div>
+                           }
+                           {showPurchased && <div className='goods__options__info'>
+                              <span className='text-center'>Olingan narx: <strong>{numberWithCommas(item.purchased)}</strong> </span>
+                              <span className='text-center'><i className='bi bi-calendar-date'> </i> {moment(item.updatedAt).format('LL')}</span>
+                           </div>}
+                        </div>
+                     }
                   </div>
                </div>
-            )).reverse()}
+            ))}
          </div>
       </div>
+
+
+      // <div onClick={() => closeOptions()} className='goods'>
+      //    <div className='d-flex'>
+      //       <input onChange={ee => setSearch(ee.target.value)} value={search} type="text" className='form-control' placeholder='Search' required />
+      //    </div>
+      //    {nothing && <h5 className='nothing'>Hech narsa topilmadi</h5>}
+      //    <div className='goods__list'>
+      //       {catGoods.filter(item => (
+      //          search === ''
+      //             ? item
+      //             : item.name.toLowerCase().includes(search.toLowerCase())
+      //       )).map(item => (
+      //          <div className={options && goodsId === item._id ? "goods__item goods__item_expand" : 'goods__item'} key={item._id}>
+      //             <div className='goods__item__main'>
+      //                <span className='goods__item__name'>{item.name}</span>
+      //                <span className='goods__item__price'>{numberWithCommas(item.price)}</span>
+
+      //                <i onClick={ee => controlOptions(ee, item._id)} className="goods__item__options bi bi-list red8"></i>
+
+      //                {options && goodsId === item._id && <div onClick={ee => ee.stopPropagation()} className="goods__options noget">
+      //                   <div className='goods__options__main'>
+      //                      <h6 onClick={() => removeGoods(item._id)}> <i className='bi bi-trash cred'></i> Delete</h6>
+      //                      <h6 onClick={() => controlEditGoods(item)}> <i className='bi bi-pen-fill'></i> Edit</h6>
+      //                   </div>
+      //                   {editGoods &&
+      //                      <div className='goods__options__edit'>
+      //                         <textarea onChange={ee => setGoodsName(ee.target.value)} value={goodsName} placeholder={item.name} type="text" className='form-control py-1' required></textarea>
+      //                         <input onChange={ee => setGoodsPrice(ee.target.value)} value={goodsPrice} placeholder={item.price} type="number" className='form-control py-1' required />
+      //                         <button onClick={() => editGoodsInfo(item._id)} type='button' className='bta bgreen py-1'>Save</button>
+      //                      </div>
+      //                   }
+      //                </div>}
+      //             </div>
+      //          </div>
+      //       )).reverse()}
+      //    </div>
+      // </div>
    );
 }
 

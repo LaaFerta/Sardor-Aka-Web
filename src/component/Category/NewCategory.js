@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategories } from '../../redux/debtActions';
+import { toastSuccess } from '../../www/element/utils';
 import Loadere from '../../www/ui/Loader/Loadere';
 
 
@@ -37,7 +38,8 @@ function NewCategory({ modalCategory, setModalCategory }) {
          },
          body: JSON.stringify({ catName })
       }).then(result => result.json()).then(data => {
-
+         toastSuccess(data.success)
+         
          setLoading(false)
          dispatch(setCategories([...categories, data.data]))
          setCatName('')
