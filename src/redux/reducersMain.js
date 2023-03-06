@@ -9,7 +9,8 @@ const initialState = {
    goods: [],
    categoryGoods: [],
    activeLink: undefined,
-   baseURL: "https://famous-dog-miniskirt.cyclic.app"
+   // baseURL: "https://famous-dog-miniskirt.cyclic.app"
+   baseURL: "http://localhost:1000"
 }
 
 function debtReducers(state = initialState, { type, payload }) {
@@ -21,8 +22,8 @@ function debtReducers(state = initialState, { type, payload }) {
             user: payload
          }
       case "SET_SIGNED_OUT":
-         localStorage.removeItem('token188')
-         localStorage.removeItem('user188')
+         localStorage.removeItem('token')
+         localStorage.removeItem('user')
          return {
             ...state,
             isAuth: false,

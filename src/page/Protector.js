@@ -25,7 +25,7 @@ function Protector(props) {
    }, [])
 
    const isAuth = useSelector(state => state.isAuth) 
-   return isAuth ? <Outlet /> : location.pathname == "/signup" ? <SignUp /> : <SignIn />
+   return isAuth ? <Outlet /> : <SignIn />
 }
 
 export default Protector;

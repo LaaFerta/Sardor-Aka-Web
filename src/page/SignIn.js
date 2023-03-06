@@ -31,13 +31,13 @@ function SignIn(props) {
          },
          body: JSON.stringify({ username, password })
       }).then(result => result.json()).then(data => {
+         setLoading(false)
          if (data.error) return toastError(data.error)
 
-         setLoading(false)
          dispatch(setSignedIn(data.user))
-
          navigate('/')
          toastSuccess(data.success)
+         
          localStorage.setItem('token', data.token)
          localStorage.setItem('user', JSON.stringify(data.user))
 
@@ -73,10 +73,10 @@ function SignIn(props) {
                </div>
             </form>
          </div>
-         <div className='text-center mt-5 dont-account'>
+         {/* <div className='text-center mt-5 dont-account'>
             <p className='mb-1'> Hisobingiz yo'qmi? </p>
             <Link className='e-link' to='/signup'> Ro'yhatdan o'tish</Link>
-         </div>
+         </div> */}
       </div>
    );
 }
