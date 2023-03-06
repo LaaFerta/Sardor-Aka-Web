@@ -6,7 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 
-$m-purple: rgb(145, 155, 255);
+$m-purple: rgb(109, 150, 255);
 $item-gray: rgb(245, 245, 245);
 $gray45: rgb(245, 245, 245);
 $gray40: rgb(240, 240, 240);
@@ -69,7 +69,7 @@ body,
 
 // // //   LAYOUT   // // //
 .navCona {
-   background-color: $m-purple;
+   background-color: black;
 }
 .header {
    margin: 0 auto;
@@ -84,7 +84,7 @@ body,
          display: inline-block;
          margin-bottom: 0;
          cursor: pointer;
-         font-size: 1.8rem;
+         font-size: 1.6rem;
          font-weight: 600;
          font-family: fira sans;
       }
@@ -124,7 +124,7 @@ body,
    align-items: center;
    flex-direction: column;
    padding: 10px 0 !important;
-   background-color: darken($m-purple, 3%);
+   background-color: black;
    color: white;
    p, h6:not(:first-child) {
       margin-bottom: 0;
@@ -169,6 +169,10 @@ body,
       background-color: darken($bgreen, 5%);
    }
 }
+.bred {
+   background-color: red !important;
+}
+
 .noget {
    -webkit-user-select: none; /* Safari */
    -ms-user-select: none; /* IE 10 and IE 11 */

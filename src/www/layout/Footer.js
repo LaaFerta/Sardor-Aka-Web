@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux'
-import { setSignedOut } from '../../redux/debtActions';
+import { setSignedOut } from '../../redux/actionsMain';
 
 function Footer(props) {
    const dispatch = useDispatch()

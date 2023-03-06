@@ -1,8 +1,8 @@
 
 
 import { createStore } from "redux";
-import debtReducers from "./debtReducers";
+import reducersMain from "./reducersMain";
 
-const store = createStore(debtReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const store = createStore(reducersMain, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store

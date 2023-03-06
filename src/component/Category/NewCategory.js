@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategories } from '../../redux/debtActions';
+import { setCategories } from '../../redux/actionsMain';
 import { toastSuccess } from '../../www/element/utils';
 import Loadere from '../../www/ui/Loader/Loadere';
 
@@ -11,7 +11,7 @@ function NewCategory({ modalCategory, setModalCategory }) {
    const [catName, setCatName] = useState('')
    const [loading, setLoading] = useState(false)
 
-   const token = localStorage.getItem('token188')
+   const token = localStorage.getItem('token')
    const categories = useSelector(state => state.categories)
    const baseURL = useSelector(state => state.baseURL)
    

@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDebtors } from '../../redux/debtActions';
-import { numberWithCommas, toastSuccess } from '../../www/element/utils';
+import { setDebtors } from '../../redux/actionsMain';
+import { toastSuccess } from '../../www/element/utils';
 import NewDebtForm from './NewDebtForm';
 
 
@@ -11,12 +11,13 @@ function Debtor({ debtor }) {
    const [expand, setExpand] = useState(false)
    const [options, setOptions] = useState(false)
    const [removeConfirm, setRemoveConfirm] = useState(false)
-   const token = localStorage.getItem('token188')
+   const token = localStorage.getItem('token')
    const dispatch = useDispatch()
    const debtors = useSelector(state => state.debtors)
    const baseURL = useSelector(state => state.baseURL)
+   const [sorting, setSorting] = useState(false)
 
-   
+
    function removeDebtor(debtorId) {
       fetch(`${baseURL}/debt/remove/${debtorId}`, {
          method: "DELETE",
@@ -79,6 +80,11 @@ function Debtor({ debtor }) {
    function controlExpand() {
       setOptions(false)
       setExpand(false)
+      setSorting(false)
+   }
+   function controlSort() {
+      setSorting(!sorting)
+      controlOptions()
    }
 
 
@@ -89,6 +95,7 @@ function Debtor({ debtor }) {
             {expand && <div onClick={() => controlOptions()} className='debtor__options'>
                <span></span><span></span><span></span>
                {options && <div onClick={ee => ee.stopPropagation()} className="debtor__options_list noget">
+                  <h6 onClick={controlSort}>Saralash</h6>
                   <h6 onClick={() => setRemoveConfirm(!removeConfirm)}> <i className='bi bi-trash cred'></i> O'chirish</h6>
                   {removeConfirm && <h6 onClick={() => removeDebtor(debtor._id)}>O'chirish</h6>}
 
@@ -97,11 +104,12 @@ function Debtor({ debtor }) {
             <h6 className='text-center debtor__name'>{debtor.debtor}</h6>
             <hr />
             <div className='debtor-debt'>
-               {debtor.debts.length !== 0 ? debtor.debts.slice(0, expand ? 9999 : 4).map(debt => (
+               {debtor.debts.length !== 0 ? debtor.debts.slice(0, expand ? 9999 : 2).map(debt => (
                   <div className='userdebt-item' key={debt._id}>
-                     {numberWithCommas(debt.amount)} {expand && <i onClick={() => removeSingleDebt(debtor._id, debt._id)} className='bi bi-x'></i>}
+                     {debt.amount}
+                     {expand && sorting && <i onClick={() => removeSingleDebt(debtor._id, debt._id)} className='bi bi-x bred text-white'></i>}
                   </div>
-               )) : <p className='text-center'>no debt yet</p>}
+               )) : <p className='text-center'>qarzlar yo'q</p>}
             </div>
             <div className='newdebtform'>
                {expand

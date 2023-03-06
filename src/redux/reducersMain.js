@@ -9,7 +9,7 @@ const initialState = {
    goods: [],
    categoryGoods: [],
    activeLink: undefined,
-   baseURL: "https://upset-sandals-colt.cyclic.app"
+   baseURL: "https://famous-dog-miniskirt.cyclic.app"
 }
 
 function debtReducers(state = initialState, { type, payload }) {

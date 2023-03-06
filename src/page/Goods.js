@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveLink, setCategories, setGoods } from '../redux/debtActions';
+import { setActiveLink, setCategories, setGoods } from '../redux/actionsMain';
 import { numberWithCommas, toastSuccess } from '../www/element/utils';
 import Loadere from '../www/ui/Loader/Loadere';
 import moment from 'moment';
@@ -24,7 +24,7 @@ function Goods(props) {
    const [goodsPurchased, setGoodsPurchased] = useState('')
    const [goodsCategory, setGoodsCategory] = useState('')
 
-   const token = localStorage.getItem('token188')
+   const token = localStorage.getItem('token')
    const goods = useSelector(state => state.goods)
    const categories = useSelector(state => state.categories)
    const dispatch = useDispatch()
@@ -87,6 +87,7 @@ function Goods(props) {
    }
 
    function editGoodsInfo(goodsId) {
+      if (goodsName.length > 70 || goodsName.length < 2 || +goodsPrice > 9999999 || +goodsPrice < 500 || +goodsPurchased > 9999999 || +goodsPurchased < 100 || !goodsCategory || goodsCategory === "toifa") return
       fetch(`${baseURL}/goods/edit/${goodsId}`, {
          method: "PUT",
          headers: {
@@ -183,10 +184,10 @@ function Goods(props) {
 
                            {showEditGoods &&
                               <div className='goods__options__info'>
-                                 <textarea onChange={ee => setGoodsName(ee.target.value)} value={goodsName} placeholder={item.name} type="text" className='form-control py-1' required></textarea>
+                                 <textarea onChange={ee => setGoodsName(ee.target.value)} value={goodsName} placeholder={item.name} type="text" minLength={2} maxLength="70" className='form-control py-1' required></textarea>
                                  <div className='d-flex gap-1'>
-                                    <input onChange={ee => setGoodsPurchased(ee.target.value)} value={goodsPurchased} placeholder={item.purchased} type="number" className='form-control py-1' required />
-                                    <input onChange={ee => setGoodsPrice(ee.target.value)} value={goodsPrice} placeholder={item.price} type="number" className='form-control py-1' required />
+                                    <input onChange={ee => setGoodsPurchased(ee.target.value)} value={goodsPurchased} placeholder={item.purchased} type="number" min="500" max="9999999" className='form-control py-1' required />
+                                    <input onChange={ee => setGoodsPrice(ee.target.value)} value={goodsPrice} placeholder={item.price} type="number" min="500" max="9999999" className='form-control py-1' required />
                                  </div>
                                  <select onChange={ee => setGoodsCategory(ee.target.value)} className="form-select" required>
                                     <option value={item.category}>{item.category}</option>

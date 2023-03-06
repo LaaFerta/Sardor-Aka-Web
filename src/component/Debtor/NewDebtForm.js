@@ -2,13 +2,13 @@
 
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDebtors } from '../../redux/debtActions';
+import { setDebtors } from '../../redux/actionsMain';
 import { numberWithCommas } from '../../www/element/utils';
 
 
 function NewDebtForm({debtorId, totalPrice}) {
    const [amount, setAmount] = useState('')
-   const token = localStorage.getItem('token188')
+   const token = localStorage.getItem('token')
    const [isDisable, setIsDisable] = useState(false)
    const dispatch = useDispatch()
    const debtors = useSelector(state => state.debtors)
@@ -16,7 +16,7 @@ function NewDebtForm({debtorId, totalPrice}) {
 
 
    function addNewDebt(amount) {
-      if(amount > 9999999 || amount < 500) return
+      if(amount.length > 300 || amount.length < 3) return
       setIsDisable(true)
       fetch(`${baseURL}/debt/debtor/new/${debtorId}`, {
          method: 'PUT',
@@ -41,11 +41,8 @@ function NewDebtForm({debtorId, totalPrice}) {
    
    return (
       <div className='newdebtform-inner'>
-         <div className='debtor__total-price'>
-            <h5>Jami: <b className='px-1'>{numberWithCommas(totalPrice)}</b> so'm</h5>
-         </div>
-         <div className='form-floating'>
-            <input onChange={ee => setAmount(ee.target.value)} value={amount} type="number" placeholder='miqdor' required />
+         <div className='newdebtfor__text'>
+            <textarea onChange={ee => setAmount(ee.target.value)} value={amount} type="text" minLength="3" maxLength="300" placeholder='miqdor' required />
          </div>
          <button onClick={() => addNewDebt(amount)} type="submit" className='bta py-1' disabled={isDisable}>+++</button>
       </div>

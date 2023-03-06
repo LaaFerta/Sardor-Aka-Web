@@ -13,7 +13,7 @@ function Navbar(props) {
          <nav className='header'>
             <div className='brand-cona'>
                <Link to="/">
-                  <h3 className={activeLink === "Home" ? "active-link nav-brand" : "nav-brand"}>188</h3>
+                  <h4 className={activeLink === "Home" ? "active-link nav-brand" : "nav-brand"}>Sardorbek</h4>
                </Link>
             </div>
             <ul className='nav-ul-list'>

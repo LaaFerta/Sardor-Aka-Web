@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import NewCategory from '../component/Category/NewCategory';
 import NewGoods from '../component/Goods/NewGoods';
-import { setActiveLink, setCategories } from '../redux/debtActions';
+import { setActiveLink, setCategories } from '../redux/actionsMain';
 import Loadere from '../www/ui/Loader/Loadere';
 
 
@@ -14,7 +14,7 @@ function Home(props) {
    const [modalCategory, setModalCategory] = useState(false)
    const [nothing, setNothing] = useState(false)
 
-   const token = localStorage.getItem('token188')
+   const token = localStorage.getItem('token')
    const categories = useSelector(state => state.categories)
    const baseURL = useSelector(state => state.baseURL)
    

@@ -5,7 +5,7 @@ import { toastError, toastSuccess } from '../../www/element/utils';
 import Loadere from '../../www/ui/Loader/Loadere';
 import '../../style/modal.scss'
 import { useDispatch, useSelector } from 'react-redux';
-import { setGoods } from '../../redux/debtActions';
+import { setGoods } from '../../redux/actionsMain';
 
 
 function NewGoods({ modalGoods, setModalGoods }) {
@@ -15,7 +15,7 @@ function NewGoods({ modalGoods, setModalGoods }) {
    const [category, setCategory] = useState('')
    const [loading, setLoading] = useState(false)
 
-   const token = localStorage.getItem('token188')
+   const token = localStorage.getItem('token')
    const categories = useSelector(state => state.categories)
    const goods = useSelector(state => state.goods)
    const baseURL = useSelector(state => state.baseURL)
@@ -67,16 +67,16 @@ function NewGoods({ modalGoods, setModalGoods }) {
             <form onSubmit={ee => addGoods(ee)} className="acform">
                <h4 className='acform__title'>Yangi tovar</h4>
                <div className="form-floating mb-3">
-                  <input onChange={ee => setName(ee.target.value)} value={name} ref={titleInputRef} type="text" className="form-control" id="title" placeholder="tovar nomi" required />
+                  <input onChange={ee => setName(ee.target.value)} value={name} ref={titleInputRef} type="text" minLength="2" maxLength="70" className="form-control" id="title" placeholder="tovar nomi" required />
                   <label htmlFor="title">tovar nomi</label>
                </div>
                <div className='d-flex gap-1'>
                   <div className="form-floating mb-3">
-                     <input onChange={ee => setPurchased(ee.target.value)} value={purchased} type="number" className="form-control" id="price" placeholder="oliingan narx" required />
+                     <input onChange={ee => setPurchased(ee.target.value)} value={purchased} type="number" min="500" max="9999999" className="form-control" id="price" placeholder="oliingan narx" required />
                      <label htmlFor="price">olingan narx</label>
                   </div>
                   <div className="form-floating mb-3">
-                     <input onChange={ee => setPrice(ee.target.value)} value={price} type="number" className="form-control" id="price" placeholder="narx" required />
+                     <input onChange={ee => setPrice(ee.target.value)} value={price} type="number" min="500" max="9999999" className="form-control" id="price" placeholder="narx" required />
                      <label htmlFor="price">narx</label>
                   </div>
                </div>

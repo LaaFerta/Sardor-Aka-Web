@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryGoods, setCategoryGoodsToNull, setGoods } from '../redux/debtActions';
+import { setCategoryGoods, setCategoryGoodsToNull, setGoods } from '../redux/actionsMain';
 import { numberWithCommas, toastSuccess } from '../www/element/utils';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import Loadere from '../www/ui/Loader/Loadere';
 import moment from 'moment';
 import 'moment/locale/uz-latn'
@@ -14,6 +14,7 @@ function CategoryGoods(props) {
    const [search, setSearch] = useState('')
    const [options, setOptions] = useState(false)
    const [goodsId, setGoodsId] = useState('')
+   const [showRemoveCategory, setShowRemoveCategory] = useState(false)
 
    const [showConfirmDelete, setShowConfirmDelete] = useState(false)
    const [showEditGoods, setShowEditGoods] = useState(false)
@@ -25,12 +26,13 @@ function CategoryGoods(props) {
    const [goodsCategory, setGoodsCategory] = useState('')
 
 
-   const token = localStorage.getItem('token188')
+   const token = localStorage.getItem('token')
    const goods = useSelector(state => state.goods)
    const catGoods = useSelector(state => state.categoryGoods)
    const categories = useSelector(state => state.categories)
    const baseURL = useSelector(state => state.baseURL)
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { name } = useParams()
    const [nothing, setNothing] = useState(false)
 
@@ -100,6 +102,21 @@ function CategoryGoods(props) {
       }).catch(ex => console.log(ex))
    }
 
+   function removeCategory() {
+      fetch(`${baseURL}/category/${name}`, {
+         method: "delete",
+         headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'PUT',
+            "Content-Type": "application/json",
+            "auth-token": token
+         }
+      }).then(result => result.json()).then(data => {
+         navigate('/goods')
+
+      }).catch(ex => console.log(ex))
+   }
+
    function controlEditGoods(item) {
       setShowConfirmDelete(false)
       setShowPurchased(false)
@@ -140,7 +157,6 @@ function CategoryGoods(props) {
    }
 
 
-
    if (!catGoods.length && !nothing) return <Loadere />
    return (
       <div onClick={closeOptions} className='goods'>
@@ -149,7 +165,7 @@ function CategoryGoods(props) {
          </div>
          {nothing && <h5 className='nothing'>Hech narsa topilmadi</h5>}
 
-         <div className='goods__list'>
+         <div className='goods__list pb150'>
             {catGoods.filter(item => (
                search === ''
                   ? item
@@ -197,6 +213,15 @@ function CategoryGoods(props) {
                </div>
             ))}
          </div>
+         <div className='remove-category'>
+            <button onClick={() => setShowRemoveCategory(!showRemoveCategory)}>Toifani O'chirish</button>
+            {showRemoveCategory && <>
+               <i className='bi bi-arrow-right'></i>
+               <button onClick={removeCategory} className="bred">O'chirish</button>
+            </>
+            }
+         </div>
+
       </div>
 
 

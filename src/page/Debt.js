@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Loadere from '../www/ui/Loader/Loadere';
-import { setActiveLink, setDebtors, setSignedOut } from '../redux/debtActions';
+import { setActiveLink, setDebtors, setSignedOut } from '../redux/actionsMain';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router';
 import Debtor from '../component/Debtor/Debtor';
@@ -14,8 +14,8 @@ function Debt(props) {
    const [nothing, setNothing] = useState(false)
    const [search, setSearch] = useState('')
 
-   const token = localStorage.getItem('token188')
-   const user = localStorage.getItem('user188')
+   const token = localStorage.getItem('token')
+   const user = localStorage.getItem('user')
    const debtors = useSelector(state => state.debtors)
    const baseURL = useSelector(state => state.baseURL)
    

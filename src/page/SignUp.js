@@ -39,12 +39,12 @@ function SignUp(props) {
             <form onSubmit={ee => signup(ee)} className="sign-form">
                <h4 className="text-center form-title">Ro'yhatdan o'tish</h4>
                <div className="form-floating mb-3">
-                  <input onChange={ee => setUsername(ee.target.value)} value={username} type="text" className="form-control" id="username2" placeholder="username" required />
-                  <label htmlFor="username2">Username</label>
+                  <input onChange={ee => setUsername(ee.target.value)} value={username} type="text" className="form-control" id="username2" placeholder="Forydalanuvchi nomi" required />
+                  <label htmlFor="username2">Foydalanuvchi nomi</label>
                </div>
                <div className="form-floating mb-3">
-                  <input onChange={ee => setPassword(ee.target.value)} value={password} type="password" className="form-control" id="password2" placeholder="password" required />
-                  <label htmlFor="password2">Password</label>
+                  <input onChange={ee => setPassword(ee.target.value)} value={password} type="password" className="form-control" id="password2" placeholder="Parol" required />
+                  <label htmlFor="password2">Parol</label>
                </div>
                <div className="signin-loading">
                   <button type='submit' className="bta px-4">O'tish</button>

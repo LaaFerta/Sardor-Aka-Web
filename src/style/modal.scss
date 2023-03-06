@@ -25,7 +25,12 @@
    border-radius: 12px;
    animation: show .3s ease;
 }
-
+.acmodal #amount {
+   height: 130px;
+}
+.acmodal .d-flex div {
+   flex-grow: 1;
+}
 
 @keyframes show {
    0% {

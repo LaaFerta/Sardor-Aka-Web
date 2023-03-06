@@ -4,7 +4,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { setSignedIn } from '../redux/debtActions';
+import { setSignedIn } from '../redux/actionsMain';
 import { toastError, toastSuccess } from '../www/element/utils';
 import Loadere from '../www/ui/Loader/Loadere';
 
@@ -38,8 +38,8 @@ function SignIn(props) {
 
          navigate('/')
          toastSuccess(data.success)
-         localStorage.setItem('token188', data.token)
-         localStorage.setItem('user188', JSON.stringify(data.user))
+         localStorage.setItem('token', data.token)
+         localStorage.setItem('user', JSON.stringify(data.user))
 
          setUsername('')
          setPassword('')
@@ -59,13 +59,13 @@ function SignIn(props) {
                <h4 className="text-center form-title">Hisobga kirish</h4>
                <div className="form-floating mb-3">
                   <input onChange={ee => setUsername(ee.target.value)} value={username} type="text"
-                     className="form-control" id="username" placeholder="username" required />
-                  <label htmlFor="name">Username</label>
+                     className="form-control" id="username" placeholder="Foydalanuvchi nomi" required />
+                  <label htmlFor="name">Foydalanuvchi nomi</label>
                </div>
                <div className="form-floating mb-3">
                   <input onChange={ee => setPassword(ee.target.value)} value={password} type="password"
-                     className="form-control" id="password1" placeholder="password" required />
-                  <label htmlFor="password1">Password</label>
+                     className="form-control" id="password1" placeholder="Parol" required />
+                  <label htmlFor="password1">Parol</label>
                </div>
                <div className='signin-loading'>
                   {loading && <div> <Loadere /> </div>}

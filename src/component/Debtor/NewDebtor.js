@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toastError, toastSuccess } from '../../www/element/utils';
 import '../../style/modal.scss'
-import { setDebtors } from '../../redux/debtActions';
+import { setDebtors } from '../../redux/actionsMain';
 import Loadere from '../../www/ui/Loader/Loadere';
 
 
@@ -13,7 +13,7 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
    const [amount, setAmount] = useState('')
    const [loading, setLoading]= useState(false)
 
-   const token = localStorage.getItem('token188')
+   const token = localStorage.getItem('token')
    const debtors = useSelector(state => state.debtors)
    const baseURL = useSelector(state => state.baseURL)
    
@@ -28,6 +28,8 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
    function addNewDebt(ee) {
       ee.preventDefault()
       setLoading(true)
+
+      if(amount.length < 3 || amount.length > 300 || debtor.length < 5 || debtor.length > 100) return
 
       setTimeout(() => {
          fetch(`${baseURL}/debt/add`, {
@@ -78,14 +80,14 @@ function NewDebtor({ showNewDebt, setShowNewDebt }) {
             <form onSubmit={ee => addNewDebt(ee)} className="acform">
                <h4 className='acform__title'>Yangi qarzdor</h4>
                <div className="form-floating mb-3">
-                  <input onChange={ee => setDebtor(ee.target.value)} value={debtor} ref={inputRef} type="text" className="form-control" id="debtor" placeholder="ism" required />
+                  <input onChange={ee => setDebtor(ee.target.value)} value={debtor} ref={inputRef} type="text" minLength="5" maxLength="100" className="form-control" id="debtor" placeholder="ism" required />
                   <label htmlFor="debtor">ism</label>
                </div>
                <div>
                   <span></span>
                </div>
                <div className="form-floating mb-3">
-                  <input onChange={ee => setAmount(ee.target.value)} value={amount} min="500" max="9999999" type="number" className="form-control" id="amount" placeholder="miqdor" required />
+                  <textarea onChange={ee => setAmount(ee.target.value)} value={amount} type="text" minLength="3" maxLength="300" className="form-control" id="amount" placeholder="miqdor" required />
                   <label htmlFor="amount">miqdor</label>
                </div>
                <div className='modal-btns'>
