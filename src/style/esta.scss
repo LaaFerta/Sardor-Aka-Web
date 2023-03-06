@@ -314,11 +314,12 @@
    z-index: 1000;
    display: flex;
    justify-content: center;
+   overflow-y: auto;
+
    & > div {
       padding: 8px;
       width: 350px;
       height: 500px;
-      position: fixed;
       top: 30px;
       margin: 0 auto;
       z-index: 10;

@@ -86,7 +86,10 @@ function Debtor({ debtor }) {
       setSorting(!sorting)
       controlOptions()
    }
-
+   if (expand) {
+      document.body.style.overflow = 'hidden';
+      // return () => document.body.style.overflow = 'unset';
+   }
 
    return (
       <div className={expand ? 'debtor expand-debt' : 'debtor'}>
