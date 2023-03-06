@@ -13,10 +13,12 @@
    display: flex;
    justify-content: center;
    align-items: center;
+   overflow-y: auto;
 }
 
 .acmodal__content {
    width: 340px;
+   height: 800px;
    position: absolute;
    top: 10%;
    padding: 30px 20px;
