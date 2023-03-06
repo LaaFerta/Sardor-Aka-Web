@@ -9,8 +9,8 @@ const initialState = {
    goods: [],
    categoryGoods: [],
    activeLink: undefined,
-   // baseURL: "https://famous-dog-miniskirt.cyclic.app"
-   baseURL: "http://localhost:1000"
+   baseURL: "https://famous-dog-miniskirt.cyclic.app"
+   // baseURL: "http://localhost:1000"
 }
 
 function debtReducers(state = initialState, { type, payload }) {
