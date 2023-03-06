@@ -165,7 +165,7 @@ function CategoryGoods(props) {
          </div>
          {nothing && <h5 className='nothing'>Hech narsa topilmadi</h5>}
 
-         <div className='goods__list pb150'>
+         <div className='goods__list'>
             {catGoods.filter(item => (
                search === ''
                   ? item
