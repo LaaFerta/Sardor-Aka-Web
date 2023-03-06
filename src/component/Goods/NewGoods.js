@@ -57,9 +57,9 @@ function NewGoods({ modalGoods, setModalGoods }) {
             console.log(ex);
          })
    }
-   if (modalGoods) {
-      document.body.style.overflow = 'hidden';
-   }
+   // if (modalGoods) {
+   //    document.body.style.overflow = 'hidden';
+   // }
 
    return (
       <div className="acmodal">

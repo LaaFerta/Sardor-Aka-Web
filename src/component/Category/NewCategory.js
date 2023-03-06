@@ -50,9 +50,9 @@ function NewCategory({ modalCategory, setModalCategory }) {
          setLoading(false)
       })
    }
-   if (modalCategory) {
-      document.body.style.overflow = 'hidden';
-   }
+   // if (modalCategory) {
+   //    document.body.style.overflow = 'hidden';
+   // }
 
    
    return (
